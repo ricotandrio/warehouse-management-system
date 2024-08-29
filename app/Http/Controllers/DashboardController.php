@@ -4,34 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ManufacturerController;
 
 class DashboardController extends Controller
 {
     protected $productController;
-    
+    protected $manufacturerController;
 
-    public function __construct(ProductController $productController)
+    public function __construct(ProductController $productController, ManufacturerController $manufacturerController)
     {
         $this->productController = $productController;
-    }
-
-    public function getDashboardView($page = 1, $limit = 10)
-    {
-        $numberOfProducts = $this->productController->getNumberOfProducts() ?? 0;
-        $productsList = $this->productController->getListOfProducts($page, $limit) ?? [];
-        
-        return view('dashboard', [
-            'number_of_products' => $numberOfProducts,
-            'products_list' => $productsList,
-            'total_pages' => ceil($numberOfProducts / $limit),
-            'page' => $page,
-            'limit' => $limit,
-        ]);
-    }
-
-    public function getDashboardQueryView($query = '', $page = 1, $limit = 10)
-    {
-        return 'Query: ' . $query . ' Page: ' . $page . ' Limit: ' . $limit;
+        $this->manufacturerController = $manufacturerController;
     }
     
+    public function index(Request $request)
+    {
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 10);
+        $order = $request->query('order', 'asc');
+        $createProduct = $request->query('createProduct', 'false');
+        
+        $products = $this->productController->getAllProducts($page, $limit, $order);
+        
+        $manufacturers = [];
+        if($createProduct == 'true') {
+            $manufacturers = $this->manufacturerController->getAllManufacturers();
+        }
+
+        return view('dashboard', [
+            'products' => $products,
+            'createProduct' => $createProduct,
+            'manufacturers' => $manufacturers
+        ]);
+    }
 }

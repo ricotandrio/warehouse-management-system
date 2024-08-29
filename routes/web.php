@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::redirect('/', '/login');
+
 Route::get('/login', [UserController::class, 'getLoginView'])->name('login');
 
 Route::post('/register', [UserController::class, 'register'])->name('post.register');
@@ -28,11 +31,14 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth'], function () {
     Route::redirect('/', '/dashboard');
 
-    Route::get('/dashboard/{page?}/{limit?}', [DashboardController::class, 'getDashboardView'])
-        ->name('dashboard')
-        ->where(['page' => '[0-9]+', 'limit' => '[0-9]+']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::get('/search', [DashboardController::class, 'search'])->name('search');
 
-    Route::get('search/{query}/{page?}/{limit?}', [DashboardController::class, 'getDashboardQueryView'])
-        ->name('search.dashboard')
-        ->where(['page' => '[0-9]+', 'limit' => '[0-9]+']); 
+    Route::get('/manufacturer', [ManufacturerController::class, 'index'])->name('manufacturer');
+
+    Route::post('/create-product', [ProductController::class, 'createProduct'])->name('create.product');
+
+    Route::delete('/delete-product/{product_id}', [ProductController::class, 'deleteProduct'])->name('delete.product');
 });
+

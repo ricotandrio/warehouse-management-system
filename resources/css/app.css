@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  
-    background-color: #fffefb;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+  background-color: #fffefb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

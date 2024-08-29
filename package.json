@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "prettier-write": "npx prettier --write resources/",
+        "prettier-check": "npx prettier --check resources/"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
@@ -15,6 +17,9 @@
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.4.40",
+        "prettier": "^3.3.3",
+        "prettier-plugin-blade": "^2.1.16",
+        "prettier-plugin-tailwindcss": "^0.6.5",
         "tailwindcss": "^3.4.7"
     }
 }

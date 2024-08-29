@@ -13,4 +13,19 @@ class Manufacturer extends Model
         'name',
         'description',
     ];
+
+    public static function getAllManufacturers() 
+    {
+        return Manufacturer::all();
+    }
+
+    public static function getManufacturerById($id) 
+    {
+        return Manufacturer::find($id);
+    }
+
+    public static function getManufacturerByName($name) 
+    {
+        return Manufacturer::where('name', $name)->first();
+    }
 }
