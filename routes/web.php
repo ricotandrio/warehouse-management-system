@@ -32,13 +32,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::redirect('/', '/dashboard');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::get('/search', [DashboardController::class, 'search'])->name('search');
 
     Route::get('/manufacturer', [ManufacturerController::class, 'index'])->name('manufacturer');
 
     Route::post('/create-product', [ProductController::class, 'createProduct'])->name('create.product');
 
-    Route::delete('/delete-product/{product_id}', [ProductController::class, 'deleteProduct'])->name('delete.product');
-});
+    Route::get('/product/{product}', [ProductController::class, 'index'])->name('detail.product');
 
+    Route::post('/update-product/{product}', [ProductController::class, 'updateProduct'])->name('update.product');
+
+    Route::delete('/delete-product/{product}', [ProductController::class, 'deleteProduct'])->name('delete.product');
+
+    Route::get('/manufacturer/{manufacturer}', [ManufacturerController::class, 'index'])->name('manufacturer');
+
+    Route::get('manufacturer', [ManufacturerController::class, 'createManufacturerPage'])->name('create.manufacturer.page');
+
+    Route::post('/create-manufacturer', [ManufacturerController::class, 'createManufacturer'])->name('create.manufacturer');
+
+    Route::delete('/manufacturer/{manufacturer}', [ManufacturerController::class, 'deleteManufacturer'])->name('delete.manufacturer');
+});

@@ -25,6 +25,29 @@
         </ul>
       </div>
 
+      <div>
+        @if (session("error"))
+          <div class="alert alert-danger mt-5 text-red-500">
+            {{ session("error") }}
+          </div>
+        @endif
+
+        <form
+          action="{{ route("delete.manufacturer", ["manufacturer" => $manufacturer]) }}"
+          method="POST"
+          style="display: inline"
+        >
+          @csrf
+          @method("DELETE")
+          <button
+            id="confirm-delete-btn"
+            type="submit"
+            class="mt-3 shrink-0 gap-x-2 rounded-lg bg-red-500 px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-red-600 sm:w-auto dark:bg-red-600 dark:hover:bg-red-500"
+          >
+            Delete
+          </button>
+        </form>
+      </div>
       <div class="mt-8">
         <div class="flex flex-row items-center justify-center">
           <h2 class="text-center text-xl">Manufacturer Products</h2>

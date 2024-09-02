@@ -34,7 +34,7 @@ class DashboardController extends Controller
         return view('dashboard', [
             'products' => $products,
             'createProduct' => $createProduct,
-            'manufacturers' => $manufacturers
+            'manufacturers' => $manufacturers,
         ]);
     }
 }

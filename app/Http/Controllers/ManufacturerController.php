@@ -14,16 +14,13 @@ class ManufacturerController extends Controller
         $this->productController = $productController;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, Manufacturer $manufacturer)
     {
-        $manufacturer_id = $request->query('manufacturer_id', '');
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
         $order = $request->query('order', 'asc');
 
-        $manufacturer = Manufacturer::findOrFail($manufacturer_id);
-
-        $products = $this->productController->getProductsByManufacturer($manufacturer->name, $page, $limit, $order);
+        $products = $this->productController->getProductsByManufacturer($manufacturer->id, $page, $limit, $order);
 
         return view(
             'manufacturer',
@@ -34,8 +31,40 @@ class ManufacturerController extends Controller
         );
     }
 
+    public function createManufacturerPage()
+    {
+        return view('modals.create-manufacturer');
+    }
+
+    public function createManufacturer(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:manufacturers'],
+            'description' => ['required', 'string', 'max:255'],
+        ]);
+
+        Manufacturer::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('dashboard');
+    }
+
+    public function deleteManufacturer(Manufacturer $manufacturer)
+    {   
+        if ($manufacturer->products->count() > 0) {
+            return redirect()->route('manufacturer', ["manufacturer" => $manufacturer])->with('error', 'Manufacturer has products associated with it, please delete all products first');
+        }
+
+        $manufacturer->delete();
+
+        return redirect()->route('dashboard');
+    }
+
     public function getAllManufacturers()
     {
         return Manufacturer::all();
     }
+
 }

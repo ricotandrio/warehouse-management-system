@@ -42,10 +42,10 @@ class Product extends Model
             ->get();
     }
 
-    public static function getProductsByManufacturer($manufacturer_name, $page = 1, $limit = 10, $order = 'asc'): LengthAwarePaginator
+    public static function getProductsByManufacturer($manufacturer_id, $page = 1, $limit = 10, $order = 'asc'): LengthAwarePaginator
     {
-        return self::orderBy('name', $order)->whereHas('manufacturer', function ($q) use ($manufacturer_name) {
-            $q->where('name', $manufacturer_name);
+        return self::orderBy('name', $order)->whereHas('manufacturer', function ($q) use ($manufacturer_id) {
+            $q->where('id', $manufacturer_id);
         })->paginate($limit, ['*'], 'page', $page);
     }
 }

@@ -18,9 +18,9 @@
     <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm lg:grid-cols-3">
       <div class="text-gray-600">
         <p class="text-lg font-medium">Product Details</p>
-        <p>Please fill out all the fields.</p>
+        <p>Detail information of Product</p>
         @if ($errors->any())
-          <div class="alert alert-danger text-red-500">
+          <div class="alert alert-danger">
             <ul>
               @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -52,13 +52,14 @@
               id="description"
               class="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
               placeholder="A refreshing soda drink."
+              value="{{ $product["description"] }}"
             />
           </div>
 
           <div class="md:col-span-3">
             <label for="price">Price in Rupiah</label>
             <input
-              type="number"
+              type="text"
               name="price"
               id="price"
               class="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
@@ -85,19 +86,24 @@
                 id="manufacturer_id"
                 class="w-full appearance-none bg-transparent px-4 text-gray-800 outline-none"
               >
-                @foreach ($manufacturers as $manufacturer)
+                {{--
+                  @foreach ($manufacturers as $manufacturer)
                   <option value="{{ $manufacturer["id"] }}">{{ $manufacturer["name"] }}</option>
-                @endforeach
+                  @endforeach
+                --}}
               </select>
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          class="hover:decoration my-5 rounded-md bg-blue-500 px-5 py-3 text-white hover:underline hover:decoration-white"
-        >
-          SUBMIT
-        </button>
+
+        @if ($edit === "true")
+          <button
+            type="submit"
+            class="hover:decoration my-5 rounded-md bg-blue-500 px-5 py-3 text-white hover:underline hover:decoration-white"
+          >
+            Add Product
+          </button>
+        @endif
       </form>
     </div>
   </div>

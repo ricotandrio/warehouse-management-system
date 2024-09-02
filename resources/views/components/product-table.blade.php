@@ -9,17 +9,16 @@
                 scope="col"
                 class="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
               >
-                <a
-                  href="{{
-                    route(
-                      $view_source,
-                      array_merge(request()->all(), [
-                        "order" => request()->query("order", "asc") === "asc" ? "desc" : "asc",
-                      ]),
-                    )
-                  }}"
-                  class="flex items-center gap-x-3 focus:outline-none"
-                >
+                @php
+                  $queryParams = request()->query(); // Get all existing query parameters
+                  $queryParams["order"] = request()->query("order", "asc") === "asc" ? "desc" : "asc";
+
+                  if ($view_source === "manufacturer") {
+                    $queryParams["manufacturer"] = $manufacturer;
+                  }
+                @endphp
+
+                <a href="{{ route($view_source, $queryParams) }}" class="flex items-center gap-x-3 focus:outline-none">
                   <span>Name</span>
 
                   <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +78,7 @@
                     <a
                       href="{{
                         route("manufacturer", [
-                          "manufacturer_id" => $product->manufacturer->id,
+                          "manufacturer" => $product->manufacturer,
                         ])
                       }}"
                       class="hover:decoration cursor-pointer text-sm font-normal text-gray-600 transition-all duration-300 hover:text-blue-500 hover:underline dark:text-gray-400"
@@ -96,39 +95,88 @@
 
                 <td class="whitespace-nowrap px-4 py-4 text-sm">
                   <div>
-                    <p class="text-gray-500 dark:text-gray-400">
+                    <p class="line-clamp-1 text-gray-500 dark:text-gray-400">
                       {{ $product["description"] }}
                     </p>
                   </div>
                 </td>
                 <td class="flex flex-row whitespace-nowrap px-4 py-4 text-sm">
                   <a
+                    href="{{
+                      route("detail.product", [
+                        "product" => $product,
+                        "edit" => "false",
+                      ])
+                    }}"
                     class="mr-2 flex cursor-pointer items-center justify-center gap-x-2 rounded-lg border bg-white px-3 py-1 text-gray-700 transition-colors duration-200 hover:bg-gray-100 sm:w-auto dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                   >
                     Detail
                   </a>
                   <a
+                    href="{{
+                      route("detail.product", [
+                        "product" => $product,
+                        "edit" => "true",
+                      ])
+                    }}"
                     class="mr-2 flex shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-blue-500 px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-blue-600 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-500"
                   >
                     Edit
                   </a>
 
-                  <form
-                    action="{{ route("delete.product", ["product_id" => $product->id]) }}"
-                    method="POST"
-                    style="display: inline"
+                  <button
+                    type="submit"
+                    class="shrink-0 gap-x-2 rounded-lg bg-red-500 px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-red-600 sm:w-auto dark:bg-red-600 dark:hover:bg-red-500"
+                    onClick="openConfirmationDeletion({{ $product->id }})"
                   >
-                    @csrf
-                    @method("DELETE")
-                    <button
-                      type="submit"
-                      class="shrink-0 gap-x-2 rounded-lg bg-red-500 px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-red-600 sm:w-auto dark:bg-red-600 dark:hover:bg-red-500"
-                    >
-                      Delete
-                    </button>
-                  </form>
+                    Delete
+                  </button>
                 </td>
               </tr>
+              <div
+                id="deleteModal"
+                class="confirm-dialog fixed inset-0 z-50 hidden items-center justify-center backdrop-blur"
+              >
+                <div class="relative min-h-screen px-6 md:flex md:items-center md:justify-center">
+                  <div class="absolute inset-0 z-10 h-full w-full opacity-25"></div>
+                  <div
+                    class="fixed inset-x-0 bottom-0 z-50 mx-4 mb-4 rounded-lg bg-white p-4 shadow-lg md:relative md:mx-auto md:max-w-md"
+                  >
+                    <div class="items-center md:flex">
+                      <div class="mt-4 text-center md:mt-0 md:text-left">
+                        <p class="font-bold">Warning!</p>
+                        <p class="mt-1 text-sm text-gray-700">
+                          You will lose all of your data by deleting this. This action cannot be undone.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="mt-4 gap-3 text-center md:flex md:justify-end md:text-right">
+                      <form
+                        action="{{ route("delete.product", ["product" => $product]) }}"
+                        method="POST"
+                        style="display: inline"
+                      >
+                        @csrf
+                        @method("DELETE")
+                        <button
+                          id="confirm-delete-btn"
+                          type="submit"
+                          class="shrink-0 gap-x-2 rounded-lg bg-red-500 px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-red-600 sm:w-auto dark:bg-red-600 dark:hover:bg-red-500"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                      <button
+                        id="confirm-cancel-btn"
+                        class="mt-4 block w-full rounded-lg bg-gray-200 px-3 py-3 text-sm font-semibold md:order-1 md:mt-0 md:inline-block md:w-auto md:py-1"
+                        onClick="closeConfirmationDeletion()"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             @endforeach
           </tbody>
         </table>
@@ -156,3 +204,14 @@
     @endif
   </div>
 </div>
+
+<script>
+  function openConfirmationDeletion(productId) {
+    document.getElementById('deleteModal').style.display = 'flex';
+    var form = document.getElementById('deleteForm');
+  }
+
+  function closeConfirmationDeletion() {
+    document.getElementById('deleteModal').style.display = 'none';
+  }
+</script>

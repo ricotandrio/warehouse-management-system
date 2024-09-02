@@ -14,6 +14,11 @@ class Manufacturer extends Model
         'description',
     ];
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'manufacturer_id');
+    }
+
     public static function getAllManufacturers() 
     {
         return Manufacturer::all();
@@ -28,4 +33,5 @@ class Manufacturer extends Model
     {
         return Manufacturer::where('name', $name)->first();
     }
+
 }

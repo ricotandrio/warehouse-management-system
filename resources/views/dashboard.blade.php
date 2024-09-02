@@ -13,11 +13,10 @@
         <h1 class="text-xl font-semibold">Warehouse | Dashboard</h1>
       </nav>
 
-      <section class="flex flex-row justify-between gap-5 p-3">
-        <a href="">
-          <button class="rounded-lg bg-blue-500 px-5 py-2 text-sm text-white">Add Sales Information</button>
-        </a>
-
+      <section class="flex w-full flex-row justify-between gap-5 p-3">
+        <h2 class="decoration ml-1 cursor-not-allowed text-lg text-gray-800 underline dark:text-white">
+          Welcome, {{ auth()->user()->name }}
+        </h2>
         <form action="/logout" method="POST">
           @csrf
           <button type="submit" class="rounded-lg bg-red-500 px-5 py-2 text-sm text-white">Logout</button>
@@ -67,7 +66,12 @@
               <span>Add Product</span>
             </a>
 
-            <button
+            <a
+              href="{{
+                $currentCreateProduct = route(
+                  "create.manufacturer.page",
+                )
+              }}"
               class="flex w-1/2 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-blue-500 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 hover:bg-blue-600 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-500"
             >
               <svg
@@ -86,7 +90,7 @@
               </svg>
 
               <span>Add Manufacturer</span>
-            </button>
+            </a>
           </div>
         </div>
 
