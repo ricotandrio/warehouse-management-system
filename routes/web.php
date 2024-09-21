@@ -1,11 +1,9 @@
 <?php
 
+use App\Http\Controllers\Product\ManufacturerController;
+use App\Http\Controllers\Product\ProductCategoryController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ManufacturerController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use App\Models\Product;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,37 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/login');
+Route::get('/form/page/create-product', [ProductController::class, 'viewCreateProductPage'])->name('create.product.page');
+Route::post('/form/action/create-product', [ProductController::class, 'create'])->name('create.product.action');
 
-Route::get('/login', [UserController::class, 'getLoginView'])->name('login');
+Route::get('/form/page/create-manufacturer', [ManufacturerController::class, 'viewCreateManufacturerPage'])->name('create.manufacturer.page');
+Route::post('/form/action/create-manufacturer', [ManufacturerController::class, 'create'])->name('create.manufacturer.action');
 
-Route::post('/register', [UserController::class, 'register'])->name('post.register');
-Route::post('/login', [UserController::class, 'login'])->name('post.login');
-
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::redirect('/', '/dashboard');
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::get('/search', [DashboardController::class, 'search'])->name('search');
-
-    Route::get('/manufacturer', [ManufacturerController::class, 'index'])->name('manufacturer');
-
-    Route::post('/create-product', [ProductController::class, 'createProduct'])->name('create.product');
-
-    Route::get('/product/{product}', [ProductController::class, 'index'])->name('detail.product');
-
-    Route::post('/update-product/{product}', [ProductController::class, 'updateProduct'])->name('update.product');
-
-    Route::delete('/delete-product/{product}', [ProductController::class, 'deleteProduct'])->name('delete.product');
-
-    Route::get('/manufacturer/{manufacturer}', [ManufacturerController::class, 'index'])->name('manufacturer');
-
-    Route::get('manufacturer', [ManufacturerController::class, 'createManufacturerPage'])->name('create.manufacturer.page');
-
-    Route::post('/create-manufacturer', [ManufacturerController::class, 'createManufacturer'])->name('create.manufacturer');
-
-    Route::delete('/manufacturer/{manufacturer}', [ManufacturerController::class, 'deleteManufacturer'])->name('delete.manufacturer');
-});
+Route::get('/form/page/create-product-category', [ProductCategoryController::class, 'viewCreateProductCategoryPage'])->name('create.product-category.page');
+Route::post('/form/action/create-product-category', [ProductCategoryController::class, 'create'])->name('create.product-category.action');

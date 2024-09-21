@@ -13,21 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('username', 50)->unique();
-            $table->string('password');
+            $table->string('name', 100);
+            $table->string('phone', 20)->nullable();
+            $table->text('description')->nullable();
             $table->string('profile_image')->nullable();
-            $table->enum('role', ['ADMIN', 'EDITOR', 'VIEWER'])->default('VIEWER');
 
+            $table->uuid('manufacturer_id');
+
+            $table->foreign('manufacturer_id')->references('id')->on('manufacturers');
+            
             $table->timestampTz('created_at');
             $table->uuid('created_by');
             $table->timestampTz('updated_at')->nullable();
             $table->uuid('updated_by')->nullable();
             $table->timestampTz('deleted_at')->nullable();
             $table->uuid('deleted_by')->nullable();
-
-            $table->rememberToken();
         });
     }
 
@@ -38,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('sales');
     }
 };

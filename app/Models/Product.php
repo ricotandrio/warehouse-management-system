@@ -2,50 +2,82 @@
 
 namespace App\Models;
 
+use App\Traits\WithLog;
+use App\Traits\WithUuid;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, WithUuid, WithLog;
+
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'name',
+        'sku',
         'description',
+        'image',
         'price',
-        'image_url',
+        'stock_quantity',
         'manufacturer_id',
-    ];
-
-    protected $attributes = [
-        'image_url' => '/',
+        'category_id',
     ];
 
     public function manufacturer()
     {
-        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_uuid', 'uuid');
     }
 
-    public static function getAllProducts($page = 1, $limit = 10, $order = 'asc'): LengthAwarePaginator
+    public static function toProductArray(Product $product)
     {
-        return self::orderBy('name', $order)->paginate($limit, ['*'], 'page', $page);
+        return [
+            'id' => $product->id,
+            'name' => $product->name,
+            'description' => $product->description,
+            'manufacturer_uuid' => $product->manufacturer_uuid,
+            'category_uuid' => $product->category_uuid,
+            'created_at' => $product->created_at,
+            'updated_at' => $product->updated_at,
+            'deleted_at' => $product->deleted_at,
+        ];
     }
 
-    public static function getProductsByQuery($query): LengthAwarePaginator
+    public static function toMapProductsArrayFromArray(array $products)
     {
-        return self::where('name', 'like', "%$query%")
-            ->orWhere('description', 'like', "%$query%")
-            ->orWhereHas('manufacturer', function ($q) use ($query) {
-                $q->where('name', 'like', "%$query%");
-            })
-            ->get();
+        return array_map(function (Product $product) {
+            if (!$product->deleted_at) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'manufacturer_uuid' => $product->manufacturer_uuid,
+                    'category_uuid' => $product->category_uuid,
+                    'created_at' => $product->created_at,
+                    'updated_at' => $product->updated_at,
+                    'deleted_at' => null,
+                ];
+            }
+        }, $products);
     }
 
-    public static function getProductsByManufacturer($manufacturer_id, $page = 1, $limit = 10, $order = 'asc'): LengthAwarePaginator
+    public static function toMapProductsArrayFromCollection(Collection $products)
     {
-        return self::orderBy('name', $order)->whereHas('manufacturer', function ($q) use ($manufacturer_id) {
-            $q->where('id', $manufacturer_id);
-        })->paginate($limit, ['*'], 'page', $page);
+        return $products->map(function (Product $product) {
+            if (!$product->deleted_at) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'manufacturer_uuid' => $product->manufacturer_uuid,
+                    'category_uuid' => $product->category_uuid,
+                    'created_at' => $product->created_at,
+                    'updated_at' => $product->updated_at,
+                    'deleted_at' => null,
+                ];
+            }
+        });
     }
 }

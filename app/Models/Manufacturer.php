@@ -2,36 +2,40 @@
 
 namespace App\Models;
 
+use App\Traits\WithLog;
+use App\Traits\WithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Manufacturer extends Model
 {
-    use HasFactory;
+    use HasFactory, WithUuid, WithLog;
+
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'name',
+        'email',
+        'phone',
         'description',
+        'profile_image',
+        'website_link',
     ];
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'manufacturer_id');
+        return $this->hasMany(Product::class, 'manufacturer_uuid', 'uuid');
     }
 
-    public static function getAllManufacturers() 
+    public function sales()
     {
-        return Manufacturer::all();
+        return $this->hasMany(Sale::class, 'manufacturer_uuid', 'uuid');
     }
 
-    public static function getManufacturerById($id) 
-    {
-        return Manufacturer::find($id);
-    }
-
-    public static function getManufacturerByName($name) 
-    {
-        return Manufacturer::where('name', $name)->first();
+    public static function uuid(string $id)
+    {   
+        return self::where('id', $id)->value('uuid');
     }
 
 }

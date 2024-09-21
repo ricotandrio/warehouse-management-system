@@ -13,12 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('username', 50)->unique();
-            $table->string('password');
-            $table->string('profile_image')->nullable();
-            $table->enum('role', ['ADMIN', 'EDITOR', 'VIEWER'])->default('VIEWER');
+            $table->string('name', 100)->unique();
+            $table->string('sku')->unique();
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->integer('stock_quantity');
+
+            $table->uuid('manufacturer_id');
+            $table->uuid('category_id');
+
+            $table->foreign('manufacturer_id')->references('id')->on('manufacturers');
+            $table->foreign('category_id')->references('id')->on('product_categories');
 
             $table->timestampTz('created_at');
             $table->uuid('created_by');
@@ -26,8 +34,6 @@ return new class extends Migration
             $table->uuid('updated_by')->nullable();
             $table->timestampTz('deleted_at')->nullable();
             $table->uuid('deleted_by')->nullable();
-
-            $table->rememberToken();
         });
     }
 
@@ -38,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('products');
     }
 };
