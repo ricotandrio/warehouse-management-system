@@ -69,7 +69,7 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Some product details cannot be shown.');
         }
 
-        return view('products.detail', [
+        return view('product-detail', [
             'product' => $product,
             'manufacturer' => $manufacturer,
             'category' => $category,

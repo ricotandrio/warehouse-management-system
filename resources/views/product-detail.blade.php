@@ -6,7 +6,7 @@
 	
 	<main class="w-full">
 		<section class="px-10 grid grid-cols-1 sm:grid-cols-2">
-			<div class= overflow-hidden">
+			<div class="overflow-hidden">
 				<img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full">
 			</div>
 			<div class="pb-10 sm:p-10">
@@ -22,7 +22,7 @@
 					<h2 class="opacity-60 mt-10 font-medium">Stock available: {{ $product->stock_quantity }}</h2>
 				@endif
 				<h1 class="text-3xl font-medium">{{ $product->name }}</h1>
-				<h1 class="text-xl">IDR {{ $product->price }}</h1>
+				<h1 class="text-xl">IDR {{ number_format($product->price, 0, ',', '.') }}</h1>
 				<p class="mt-16 text-justify">
 					{{ $product->description }}
 				</p>

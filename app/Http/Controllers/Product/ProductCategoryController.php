@@ -31,4 +31,13 @@ class ProductCategoryController extends Controller
     {
         return view('forms.create-product-category');
     }
+
+    public function viewProductCategoriesPage()
+    {
+        $product_categories = ProductCategory::all();
+
+        return view('product-categories', [
+            'product_categories' => $product_categories
+        ]);
+    }
 }

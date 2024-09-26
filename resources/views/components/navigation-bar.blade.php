@@ -76,7 +76,7 @@
         </svg>
       </li>
       <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="">Product Category</a>
+        <a href="{{ route('product-categories.page') }}">Product Category</a>
         <svg
           class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
           width="24"
@@ -137,7 +137,7 @@
       </li>
     </ul>
 
-    @if (auth()->user())
+    @if (auth()->check())
       <div class="mt-24"></div>
       <form
         action="{{ route('logout.action') }}"

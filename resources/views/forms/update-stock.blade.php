@@ -9,6 +9,7 @@
     class="flex flex-col px-10 py-3 pt-5 sm:pt-8"
   >
     @csrf
+    @method("PUT")
     <h1 class="text-3xl font-semibold">UPDATE STOCK</h1>
     <p>Fill in the form below to create new transaction for {{ $product->name }}.</p>
 
