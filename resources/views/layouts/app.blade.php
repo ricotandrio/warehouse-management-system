@@ -9,7 +9,7 @@
     <link href="{{ asset("css/app.css") }}" rel="stylesheet" />
     <title>Warehouse | Dashboard</title>
   </head>
-  <body class="font-poppins px-5 py-3">
+  <body class="font-poppins">
     @yield("content")
   </body>
 </html>

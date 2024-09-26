@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Product\ManufacturerController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductController;
@@ -17,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [DashboardController::class, 'viewDashboardPage'])->name('dashboard.viewer.page');
+Route::get('/admin', [DashboardController::class, 'viewDashboardPage'])->name('dashboard.admin.page');
+
 Route::get('/form/page/create-product', [ProductController::class, 'viewCreateProductPage'])->name('create.product.page');
 Route::post('/form/action/create-product', [ProductController::class, 'create'])->name('create.product.action');
 
@@ -25,3 +30,19 @@ Route::post('/form/action/create-manufacturer', [ManufacturerController::class, 
 
 Route::get('/form/page/create-product-category', [ProductCategoryController::class, 'viewCreateProductCategoryPage'])->name('create.product-category.page');
 Route::post('/form/action/create-product-category', [ProductCategoryController::class, 'create'])->name('create.product-category.action');
+
+Route::get('/product/{product_id}', [ProductController::class, 'viewProductDetailPage'])->name('view.product.detail.page');
+
+Route::get('/login', [LoginController::class, 'viewloginPage'])->name('login.page');
+Route::post('/login', [LoginController::class, 'login'])->name('login.action');
+
+Route::get('/register', [RegisterController::class, 'viewRegisterPage'])->name('register.page');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.action');
+
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy.page');
+
+Route::get('/terms-and-conditions', function () {
+    return view('terms-and-conditions');
+})->name('terms-and-conditions.page');

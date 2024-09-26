@@ -25,12 +25,12 @@ class Manufacturer extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'manufacturer_uuid', 'uuid');
+        return $this->hasMany(Product::class, 'manufacturer_id', 'id');
     }
 
     public function sales()
     {
-        return $this->hasMany(Sale::class, 'manufacturer_uuid', 'uuid');
+        return $this->hasMany(Sale::class, 'manufacturer_id', 'id');
     }
 
     public static function uuid(string $id)

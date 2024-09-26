@@ -7,7 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-
+      aspectRatio: {
+        '16/9': '16 / 9',
+        '4/3': '4 / 3',
+        '3/4': '3 / 4',
+      }
     },
   },
   plugins: [],

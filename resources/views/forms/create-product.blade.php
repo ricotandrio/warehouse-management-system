@@ -3,10 +3,10 @@
 
 @section("content")
   <form 
-    action="/form/action/create-product" 
+    action="{{ route('create.product.action')}}" 
     method="POST" 
     enctype="multipart/form-data"
-    class="flex flex-col pt-5 sm:pt-3"
+    class="flex flex-col px-5 py-3 pt-5 sm:pt-3"
   >
     @csrf
     <h1 class="text-3xl">CREATE PRODUCT</h1>

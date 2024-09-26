@@ -52,4 +52,25 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Product created successfully.');
     }
+
+    public function viewProductDetailPage(Request $request) {
+        $product = Product::find($request->product_id);
+        $manufacturer = $product->manufacturer;
+        $category = $product->category;
+
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found.');
+        }
+
+        if (!$manufacturer || !$category) {
+            return redirect()->back()->with('error', 'Some product details cannot be shown.');
+        }
+
+        return view('products.detail', [
+            'product' => $product,
+            'manufacturer' => $manufacturer,
+            'category' => $category,
+        ]);
+    }
 }

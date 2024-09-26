@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function getRegisterView()
+    public function viewRegisterPage()
     {
-        return view('register');
+        return view('auths.register');
     }
 
     public function register(Request $request)

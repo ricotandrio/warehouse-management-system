@@ -3,9 +3,9 @@
 
 @section("content")
   <form 
-    action="/form/action/create-product-category" 
+    action="{{ route('create.product-category.action') }}" 
     method="POST"
-    class="flex flex-col pt-5 sm:pt-3"
+    class="flex flex-col px-5 py-3 pt-5 sm:pt-3"
   >
     @csrf
     <h1 class="text-3xl">CREATE PRODUCT CATEGORY</h1>

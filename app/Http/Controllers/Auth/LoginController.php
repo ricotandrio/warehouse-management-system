@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    public function getLoginView()
+    public function viewLoginPage()
     {
         if(Auth::check()) {
             return redirect('/');
         }
-        return view('login');
+        return view('auths.login');
     }
 
     public function login(Request $request)
