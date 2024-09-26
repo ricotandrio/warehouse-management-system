@@ -73,4 +73,15 @@ class ProductController extends Controller
             'category' => $category,
         ]);
     }
+
+    public function delete(string $product_id)
+    {
+        $product = Product::destroy($product_id);
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Failed to delete product.');
+        }
+
+        return redirect()->back()->with('success', 'Product deleted successfully.');
+    }
 }

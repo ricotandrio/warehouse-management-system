@@ -60,9 +60,11 @@
     </ul>
 
     <ul class="mt-16">
-      <li class="mt-1">
-        <a href="{{ route('login.page') }}" class="underline hover:opacity-60">Login</a>
-      </li>
+      @if (!auth()->check())
+        <li class="mt-1">
+          <a href="{{ route('login.page') }}" class="underline hover:opacity-60">Login</a>
+        </li>
+      @endif
       <li class="mt-1">
         <a href="" class="underline hover:opacity-60">Contact Us</a>
       </li>

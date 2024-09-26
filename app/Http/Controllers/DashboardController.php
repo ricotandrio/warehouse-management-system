@@ -9,14 +9,25 @@ class DashboardController extends Controller
 {
     public function viewDashboardPage()
     {
-        // if(auth()->user()->role === 'admin') {
-        //     return view('dashboard-admin', [
-        //         'products' => Product::orderBy('name', 'asc')->get(),
-        //     ]);
-        // }
-
         return view('dashboard', [
             'products' => Product::orderBy('name', 'asc')->get(),
+        ]);
+    }
+
+    public function viewAdminDashboardPage(Request $request)
+    {
+        $selected = $request->query('selected', 'products');
+        // if(!auth()->check()) {
+        //     return redirect()->route('login');
+        // }
+
+        // if(auth()->user()->role !== 'admin') {
+        //     return redirect()->route('dashboard');
+        // }
+
+        return view('admins.dashboard', [
+            'products' => Product::orderBy('name', 'asc')->get(),
+            'selected' => $selected,
         ]);
     }
 }
