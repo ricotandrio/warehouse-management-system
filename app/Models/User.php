@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\WithLog;
 use App\Traits\WithUuid;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, WithUuid, WithLog;
 
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -35,11 +34,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function categories()
-    {
-        return $this->hasMany(UserCategory::class);
-    }
 
     public static function toUserArray(User $user)
     {

@@ -28,7 +28,7 @@
 				</p>
 
 				<div class="w-full">
-					<a href="" class="text-center text-white block px-10 py-5 bg-black mt-10 w-full hover:opacity-60">
+					<a href="{{ route('update-stock.page', ['product_id' => $product->id]) }}" class="text-center text-white block px-10 py-5 bg-black mt-10 w-full hover:opacity-60">
 						UPDATE STOCK
 					</a>
 				</div>

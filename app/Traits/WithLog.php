@@ -10,7 +10,7 @@ Trait WithLog
     {
         static::updating(function ($model) {
             $model->updated_at = now();
-            $model->updated_by = Auth::user()->uuid;
+            $model->updated_by = Auth::user()->id ?? $model->id;
         });
     }
 }

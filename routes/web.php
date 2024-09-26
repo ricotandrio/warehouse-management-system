@@ -6,6 +6,8 @@ use App\Http\Controllers\Product\ManufacturerController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Product;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['admin'])->prefix('/admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'viewAdminDashboardPage'])->name('dashboard.admin.page');
+
+    
+    Route::get('/product/{product_id}/update-stock', [ProductController::class, 'viewUpdateStockPage'])->name('update-stock.page');
+
+    Route::post('/product/{product_id}/update-stock', [ProductController::class, 'updateStock'])->name('update-stock.action');
+});
+
 Route::get('/', [DashboardController::class, 'viewDashboardPage'])->name('dashboard.viewer.page');
-Route::get('/admin', [DashboardController::class, 'viewAdminDashboardPage'])->name('dashboard.admin.page');
 
 Route::get('/form/page/create-product', [ProductController::class, 'viewCreateProductPage'])->name('create.product.page');
 Route::post('/form/action/create-product', [ProductController::class, 'create'])->name('create.product.action');
@@ -47,6 +57,14 @@ Route::get('/terms-and-conditions', function () {
     return view('terms-and-conditions');
 })->name('terms-and-conditions.page');
 
+Route::get('/contact-us', function () {
+    return view('contact-us');
+})->name('contact-us.page');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
 
 Route::delete('/product/{product_id}', [ProductController::class, 'delete'])->name('delete.product.action');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile.page');

@@ -2,10 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\WithLog;
+use App\Traits\WithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TransactionHeader extends Model
 {
-    use HasFactory;
+    use HasFactory, WithUuid, WithLog;
+
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'type'
+    ];
 }

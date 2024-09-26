@@ -15,6 +15,7 @@ class LoginController extends Controller
         if(Auth::check()) {
             return redirect('/');
         }
+
         return view('auths.login');
     }
 
@@ -25,17 +26,16 @@ class LoginController extends Controller
             'password' => ['required', "min:8"]
         ]);
 
-        if (!Auth::attempt([
+        if (Auth::attempt([
             'username' => $credentials['username'], 
-            'password' => bcrypt($credentials['password'])
-        ])) {
-            return redirect('/login')
-                ->withErrors('The provided credentials do not match our records.')
-                ->withInput();
+            'password' => $credentials['password']
+        ], true)) {
+            return redirect()->intended('/');
         }
 
-        $request->session()->regenerate();
-        return redirect('/');
+        return redirect('/login')
+            ->withErrors('The provided credentials do not match our records.')
+            ->withInput();
     }
 
     public function logout()
