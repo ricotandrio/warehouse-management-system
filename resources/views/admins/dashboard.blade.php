@@ -16,8 +16,8 @@
   </section>
   <main class="lex relative w-full flex-col items-center justify-start">
     <section class="mt-5 w-full px-7">
-      <div id="utility-menu-button" class="cursor-pointer p-3 hover:opacity-60">
-        <svg width="24" height="24" fill="#000000" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <div class="p-3">
+        <svg id="utility-menu-open" class="cursor-pointer hover:opacity-60" width="24" height="24" fill="#000000" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
@@ -28,52 +28,6 @@
           </g>
         </svg>
       </div>
-    </section>
-    <section
-      id="utility-menu"
-      class="absolute left-10 top-8 mt-8 flex-col border bg-white py-5 pr-20 pt-8 opacity-0 duration-200"
-    >
-      @foreach ([
-          [
-            "name" => "Create Product",
-            "route" => "create.product.page"
-          ],
-          [
-            "name" => "Create Manufacturer",
-            "route" => "create.manufacturer.page"
-          ],
-          [
-            "name" => "Create Product Category",
-            "route" => "create.product-category.page"
-          ],
-          [
-            "name" => "Update User",
-            "route" => "create.product-category.page"
-          ]
-        ]
-        as $item)
-        <div class="group mb-3 ml-4 flex flex-row">
-          <svg
-            class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M10 16L14 12L10 8"
-              stroke="#200E32"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <a href="{{ route($item["route"]) }}" class="">
-            {{ $item["name"] }}
-          </a>
-        </div>
-      @endforeach
     </section>
 
     <section class="mt-10 flex w-full justify-between px-10">
@@ -103,168 +57,100 @@
         @endforeach
       </div>
 
-      @if (count($products) === 0)
+      @if ((count($products) === 0) && $selected === "products" || count($manufacturers) === 0 && $selected === "manufacturers" || count($categories) === 0 && $selected === "categories")
         <div class="flex items-center justify-center mt-10">
-          <h1>There's no product available.</h1>
+          <h1>There's no view available.</h1>
         </div>
       @else
         <div class="flex flex-col overflow-hidden border">
           <div class="-my-2 -ml-4 overflow-x-auto sm:-ml-6 lg:-ml-8">
             <div class="inline-block min-w-full py-2 align-middle md:pl-6 lg:pl-8">
               <div class="overflow-hidden">
-                  <table class="min-w-full divide-y divide-gray-200 border">
-                    <thead class="bg-gray-50 text-black">
-                      <tr>
-                        <th scope="col" class="px-4 py-3.5 text-left text-sm font-normal rtl:text-right">
-                          <a href="" class="flex items-center gap-x-3 focus:outline-none">
-                            <span>Name</span>
-
-                            <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.1"
-                              />
-                              <path
-                                d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.1"
-                              />
-                              <path
-                                d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.3"
-                              />
-                            </svg>
-                          </a>
-                        </th>
-
-                        <th scope="col" class="px-12 py-3.5 text-left text-sm font-normal rtl:text-right">Price</th>
-
-                        <th scope="col" class="px-4 py-3.5 text-left text-sm font-normal rtl:text-right">Description</th>
-
-                        <th scope="col" class="px-4 py-3.5 text-left text-sm font-normal rtl:text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                      
-                      @foreach ($products as $product)
-                        <tr>
-                          <td class="whitespace-nowrap px-4 py-4 text-sm font-medium">
-                            <div>
-                              <a
-                                href="{{ route("view.product.detail.page", ["product_id" => $product->id]) }}"
-                                class="font-medium text-black hover:decoration cursor-pointer text-sm hover:decoration-black hover:underline"
-                              >
-                                {{ $product->name }}
-                              </a>
-                              <h2 class="font-medium text-gray-500 ">
-                                {{ $product->name }}
-                              </h2>
-                            </div>
-                          </td>
-                          <td class="whitespace-nowrap px-12 py-4 text-sm font-medium">
-                            <div class="inline gap-x-2 py-1 text-sm font-normal dark:bg-gray-800">
-                              IDR {{ $product->price }}
-                            </div>
-                          </td>
-
-                          <td class="whitespace-nowrap px-4 py-4 text-sm">
-                            <div>
-                              <p class="line-clamp-1 text-gray-500">
-                                {{ $product->name }}
-                              </p>
-                            </div>
-                          </td>
-                          <td class="mt-4 flex flex-row items-center justify-start text-sm">
-                            <a
-                              href=""
-                              class="flex flex-row items-center justify-center bg-blue-500 py-2 pl-4 pr-5 text-white"
-                            >
-                              <svg
-                                width="16"
-                                height="16"
-                                class="mr-2"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                stroke="#ffffff"
-                              >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                  <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M20.8477 1.87868C19.6761 0.707109 17.7766 0.707105 16.605 1.87868L2.44744 16.0363C2.02864 16.4551 1.74317 16.9885 1.62702 17.5692L1.03995 20.5046C0.760062 21.904 1.9939 23.1379 3.39334 22.858L6.32868 22.2709C6.90945 22.1548 7.44285 21.8693 7.86165 21.4505L22.0192 7.29289C23.1908 6.12132 23.1908 4.22183 22.0192 3.05025L20.8477 1.87868ZM18.0192 3.29289C18.4098 2.90237 19.0429 2.90237 19.4335 3.29289L20.605 4.46447C20.9956 4.85499 20.9956 5.48815 20.605 5.87868L17.9334 8.55027L15.3477 5.96448L18.0192 3.29289ZM13.9334 7.3787L3.86165 17.4505C3.72205 17.5901 3.6269 17.7679 3.58818 17.9615L3.00111 20.8968L5.93645 20.3097C6.13004 20.271 6.30784 20.1759 6.44744 20.0363L16.5192 9.96448L13.9334 7.3787Z"
-                                    fill="#ffffff"
-                                  ></path>
-                                </g>
-                              </svg>
-                              EDIT
-                            </a>
-                            <div class="ml-4">
-                              <form
-                                action="{{ route("delete.product.action", ["product_id" => $product->id]) }}"
-                                method="POST"
-                                class="inline"
-                              >
-                                @csrf
-                                @method("DELETE")
-                                <button
-                                  type="submit"
-                                  class="flex flex-row items-center justify-center bg-red-500 py-2 pl-4 pr-5 text-white"
-                                >
-                                  <svg
-                                    width="16"
-                                    height="16"
-                                    class="mr-2"
-                                    viewBox="0 0 1024 1024"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="#000000"
-                                  >
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                      <path
-                                        fill="#ffffff"
-                                        d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                  DELETE
-                                </button>
-                              </form>
-                            </div>
-                          </td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                @if ($selected === "categories")
+                  @include("admins.category-table")
+                @elseif ($selected === "manufacturers")
+                  @include("admins.manufacturer-table")
+                @else
+                  @include("admins.product-table")
+                @endif
               </div>
             </div>
           </div>
         </div>
       @endif
     </section>
+
+    <section
+      id="utility-menu"
+      class="fixed top-0 -z-10 h-screen w-full overflow-y-scroll bg-black bg-opacity-50 opacity-0 duration-100 ease-linear"
+    >
+      <div class="absolute left-0 min-h-screen w-[30%] bg-white p-10">
+        <div class="flex w-full flex-row items-center justify-start pb-5 border-b-2 border-black">
+          <div id="utility-menu-close" class=" hover:opacity-60 inline-flex cursor-pointer">
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              width="800px"
+              height="800px"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
+                fill="#0F0F0F"
+              />
+            </svg>
+            <h1 class="ml-2 mt-0.5 text-sm">CLOSE</h1>
+          </div>
+        </div>
+        <h1 class="text-xl mt-5 font-medium text-gray-800">Warehouse</h1>
+        <ul class="mt-10 flex flex-col gap-4">
+          <li class="flex-row flex gap-3 hover:opacity-60">  
+            <svg width="24" height="24" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>product</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="icon" fill="#000000" transform="translate(64.000000, 34.346667)"> <path d="M192,7.10542736e-15 L384,110.851252 L384,332.553755 L192,443.405007 L1.42108547e-14,332.553755 L1.42108547e-14,110.851252 L192,7.10542736e-15 Z M127.999,206.918 L128,357.189 L170.666667,381.824 L170.666667,231.552 L127.999,206.918 Z M42.6666667,157.653333 L42.6666667,307.920144 L85.333,332.555 L85.333,182.286 L42.6666667,157.653333 Z M275.991,97.759 L150.413,170.595 L192,194.605531 L317.866667,121.936377 L275.991,97.759 Z M192,49.267223 L66.1333333,121.936377 L107.795,145.989 L233.374,73.154 L192,49.267223 Z" id="Combined-Shape"> </path> </g> </g> </g></svg>
+            <a href="{{ route('create.product.page') }}">
+              Create Product
+            </a>
+          </li>
+          <li class="flex-row flex gap-3 hover:opacity-60">  
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.92444 4.12856C2.98896 2.93485 3.9757 2 5.17116 2H6.32894C7.52439 2 8.51114 2.93485 8.57566 4.12856L9.4135 19.6286C9.48315 20.917 8.45714 22 7.16678 22H4.33332C3.04296 22 2.01695 20.917 2.0866 19.6286L2.92444 4.12856Z" fill="#212121"></path> <path d="M9.51184 22C10.1114 21.3751 10.4626 20.5125 10.4119 19.5746L9.85566 9.28385L14.5218 5.42222C14.7456 5.23698 15.0563 5.19768 15.3192 5.32137C15.5821 5.44506 15.75 5.70947 15.75 6.00002V10.2404L20.7306 5.45898C20.9474 5.25083 21.2675 5.19223 21.544 5.31007C21.8205 5.42792 22 5.69946 22 6.00002V19.75C22 20.9927 20.9926 22 19.75 22H9.51184ZM13 20.5H18V16C18 15.4477 17.5523 15 17 15H14C13.4477 15 13 15.4477 13 16V20.5Z" fill="#212121"></path> </g></svg>
+            <a href="{{ route('create.manufacturer.page') }}">
+              Create Manufacturer
+            </a>
+          </li>
+          <li class="flex-row flex gap-3 hover:opacity-60">  
+            <svg width="24" height="24" fill="#000000" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect id="Icons" x="-384" y="-320" width="1280" height="800" style="fill:none;"></rect> <g id="Icons1" serif:id="Icons"> <g id="Strike"> </g> <g id="H1"> </g> <g id="H2"> </g> <g id="H3"> </g> <g id="list-ul"> </g> <g id="hamburger-1"> </g> <g id="hamburger-2"> </g> <g id="list-ol"> </g> <g id="list-task"> </g> <g id="trash"> </g> <g id="vertical-menu"> </g> <g id="horizontal-menu"> </g> <g id="sidebar-2"> </g> <g id="Pen"> </g> <g id="Pen1" serif:id="Pen"> </g> <g id="clock"> </g> <g id="external-link"> </g> <g id="hr"> </g> <g id="info"> </g> <g id="warning"> </g> <g id="plus-circle"> </g> <g id="minus-circle"> </g> <g id="vue"> </g> <g id="cog"> </g> <g id="logo"> </g> <g id="radio-check"> </g> <g id="eye-slash"> </g> <g id="eye"> </g> <g id="toggle-off"> </g> <g id="shredder"> </g> <g> <path d="M9.89,30.496c-1.14,1.122 -1.784,2.653 -1.791,4.252c-0.006,1.599 0.627,3.135 1.758,4.266c3.028,3.028 7.071,7.071 10.081,10.082c2.327,2.326 6.093,2.349 8.448,0.051c5.91,-5.768 16.235,-15.846 19.334,-18.871c0.578,-0.564 0.905,-1.338 0.905,-2.146c0,-4.228 0,-17.607 0,-17.607l-17.22,0c-0.788,0 -1.544,0.309 -2.105,0.862c-3.065,3.018 -13.447,13.239 -19.41,19.111Zm34.735,-15.973l0,11.945c0,0.811 -0.329,1.587 -0.91,2.152c-3.069,2.981 -13.093,12.718 -17.485,16.984c-1.161,1.127 -3.012,1.114 -4.157,-0.031c-2.387,-2.386 -6.296,-6.296 -8.709,-8.709c-0.562,-0.562 -0.876,-1.325 -0.872,-2.12c0.003,-0.795 0.324,-1.555 0.892,-2.112c4.455,-4.373 14.545,-14.278 17.573,-17.25c0.561,-0.551 1.316,-0.859 2.102,-0.859c3.202,0 11.566,0 11.566,0Zm-7.907,2.462c-1.751,0.015 -3.45,1.017 -4.266,2.553c-0.708,1.331 -0.75,2.987 -0.118,4.356c0.836,1.812 2.851,3.021 4.882,2.809c2.042,-0.212 3.899,-1.835 4.304,-3.896c0.296,-1.503 -0.162,-3.136 -1.213,-4.251c-0.899,-0.953 -2.18,-1.548 -3.495,-1.57c-0.031,-0.001 -0.062,-0.001 -0.094,-0.001Zm0.008,2.519c1.105,0.007 2.142,0.849 2.343,1.961c0.069,0.384 0.043,0.786 -0.09,1.154c-0.393,1.079 -1.62,1.811 -2.764,1.536c-1.139,-0.274 -1.997,-1.489 -1.802,-2.67c0.177,-1.069 1.146,-1.963 2.27,-1.981c0.014,0 0.029,0 0.043,0Z"></path> <path d="M48.625,13.137l0,4.001l3.362,0l0,11.945c0,0.811 -0.328,1.587 -0.909,2.152c-3.069,2.981 -13.093,12.717 -17.485,16.983c-1.161,1.128 -3.013,1.114 -4.157,-0.03l-0.034,-0.034l-1.016,0.993c-0.663,0.646 -1.437,1.109 -2.259,1.389l1.174,1.174c2.327,2.327 6.093,2.35 8.447,0.051c5.91,-5.768 16.235,-15.845 19.335,-18.87c0.578,-0.565 0.904,-1.339 0.904,-2.147c0,-4.227 0,-17.607 0,-17.607l-7.362,0Z"></path> </g> <g id="spinner--loading--dots-" serif:id="spinner [loading, dots]"> </g> <g id="react"> </g> <g id="check-selected"> </g> <g id="turn-off"> </g> <g id="code-block"> </g> <g id="user"> </g> <g id="coffee-bean"> </g> <g id="coffee-beans"> <g id="coffee-bean1" serif:id="coffee-bean"> </g> </g> <g id="coffee-bean-filled"> </g> <g id="coffee-beans-filled"> <g id="coffee-bean2" serif:id="coffee-bean"> </g> </g> <g id="clipboard"> </g> <g id="clipboard-paste"> </g> <g id="clipboard-copy"> </g> <g id="Layer1"> </g> </g> </g></svg>
+            <a href="{{ route('create.product-category.page') }}">
+              Create Category
+            </a>
+          </li>
+        </ul>
+      </div>  
+    </section>
   </main>
 
   <script>
-    const utilityMenuButton = document.getElementById('utility-menu-button');
+    const utilityMenuOpen = document.getElementById('utility-menu-open');
+    const utilityMenuClose = document.getElementById('utility-menu-close');
     const utilityMenu = document.getElementById('utility-menu');
 
-    var isUtilityMenuOpen = false;
+    utilityMenuOpen.addEventListener('click', () => {
+      utilityMenu.style.opacity = '100%';
+      utilityMenu.style.zIndex = '1000';
+    });
 
-    utilityMenuButton.addEventListener('click', () => {
-      if (isUtilityMenuOpen) {
-        utilityMenu.style.opacity = '0';
-      } else {
-        utilityMenu.style.opacity = '1';
-      }
-      isUtilityMenuOpen = !isUtilityMenuOpen;
+    utilityMenuClose.addEventListener('click', () => {
+      utilityMenu.style.opacity = '0%';
+      utilityMenu.style.zIndex = '-1';
+    });
+
+    utilityMenu.addEventListener('click', () => {
+      utilityMenu.style.opacity = '0%';
+      utilityMenu.style.zIndex = '-1';
+    });
+
+    utilityMenu.children[0].addEventListener('click', (event) => {
+      event.stopPropagation();
     });
   </script>
 @endsection
