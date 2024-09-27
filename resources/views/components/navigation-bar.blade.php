@@ -3,7 +3,7 @@
   <div class="flex items-center">
     <ul class="flex items-center space-x-6">
       <li class="cursor-pointer hover:opacity-60">
-        <a href="{{ auth()->check() ? route("profile.page") : route("login.page") }}">
+        <a href="{{ auth()->check() ? route("user.profile.page") : route("login.page") }}">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -55,7 +55,7 @@
     </div>
     <ul class="mt-10">
       <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="">Profile</a>
+        <a href="{{ route('user.profile.page') }}">Profile</a>
         <svg
           class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
           width="24"
