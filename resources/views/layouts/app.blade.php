@@ -21,7 +21,7 @@
       }
 
       /* Firefox */
-      input[type=number] {
+      input[type='number'] {
         -moz-appearance: textfield;
       }
     </style>

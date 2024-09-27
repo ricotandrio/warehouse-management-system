@@ -55,4 +55,5 @@
       .
     </p>
   </main>
+  @include("components.footer")
 @endsection

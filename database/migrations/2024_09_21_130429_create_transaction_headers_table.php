@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('transaction_headers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('type', ['IN', 'OUT']);
+            $table->text('description')->nullable();
             
             $table->timestampTz('created_at');
             $table->uuid('created_by');

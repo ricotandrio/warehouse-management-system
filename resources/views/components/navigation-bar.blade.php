@@ -37,8 +37,7 @@
 >
   <div class="absolute right-0 min-h-screen w-[30%] border bg-white p-10">
     <div class="flex w-full flex-row items-center justify-end">
-      <div id="side-bar-close" class="inline-flex hover:opacity-60 cursor-pointer">
-
+      <div id="side-bar-close" class="inline-flex cursor-pointer hover:opacity-60">
         <h1 class="mr-2 mt-0.5 text-sm">CLOSE</h1>
         <svg
           width="24"
@@ -58,7 +57,7 @@
     </div>
     <ul class="mt-10">
       <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="{{ route('user.profile.page') }}">Profile</a>
+        <a href="{{ route("product-categories.page") }}">Product Categories</a>
         <svg
           class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
           width="24"
@@ -79,28 +78,7 @@
         </svg>
       </li>
       <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="{{ route('product-categories.page') }}">Product Category</a>
-        <svg
-          class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          width="800px"
-          height="800px"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M10 16L14 12L10 8"
-            stroke="#200E32"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </li>
-      <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="">Product Manufacturer</a>
+        <a href="">Product Manufacturers</a>
         <svg
           class="opacity-0 duration-300 ease-linear group-hover:opacity-100"
           width="24"
@@ -130,6 +108,12 @@
       @endif
 
       <li class="mt-1">
+        <a href="#" class="underline hover:opacity-60">About</a>
+      </li>
+      <li class="mt-1">
+        <a href="#" class="underline hover:opacity-60">Team</a>
+      </li>
+      <li class="mt-1">
         <a href="{{ route("contact-us.page") }}" class="underline hover:opacity-60">Contact Us</a>
       </li>
       <li class="mt-1">
@@ -142,17 +126,9 @@
 
     @if (auth()->check())
       <div class="mt-24"></div>
-      <form
-        action="{{ route('logout.action') }}"
-        method="POST"
-        class="inline hover:opacity-60"
-      >
+      <form action="{{ route("logout.action") }}" method="POST" class="inline hover:opacity-60">
         @csrf
-        <button
-          type="submit"
-        >
-          Logout
-        </button>
+        <button type="submit">Logout</button>
       </form>
     @endif
   </div>

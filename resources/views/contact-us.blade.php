@@ -10,22 +10,19 @@
       <strong>September 26, 2024</strong>
     </p>
 
-    <p class="mt-5 mb-10">
-      If you have any questions or concerns about our services, please feel free to contact us using the information below:
+    <p class="mb-10 mt-5">
+      If you have any questions or concerns about our services, please feel free to contact us using the information
+      below:
     </p>
 
     <h2 class="mb-1 mt-3 text-xl font-medium">Email</h2>
     <p>
-      <a href="mailto:" class="underline hover:opacity-60">
-        help@warehouse.id 
-      </a>
+      <a href="mailto:" class="underline hover:opacity-60">help @warehouse.id</a>
     </p>
 
     <h2 class="mb-1 mt-3 text-xl font-medium">Phone</h2>
     <p>
-      <a href="tel:" class="underline hover:opacity-60">
-        +1 (123) 456-7890
-      </a>
+      <a href="tel:" class="underline hover:opacity-60">+1 (123) 456-7890</a>
     </p>
 
     <h2 class="mb-1 mt-3 text-xl font-medium">Address</h2>
@@ -37,6 +34,6 @@
       <br />
       United States
     </p>
-    
   </main>
+  @include("components.footer")
 @endsection

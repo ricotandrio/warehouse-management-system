@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('product_id');
             $table->integer('quantity');
+            
+            $table->uuid('product_id');
+            $table->uuid('transaction_id');
 
+            $table->foreign('transaction_id')->references('id')->on('transaction_headers');
             $table->foreign('product_id')->references('id')->on('products');
             
             $table->timestampTz('created_at');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Product\ManufacturerController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -39,6 +40,10 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
     })->name('user.profile.by.admin.page');
 
     Route::put('/user/{user_id}', [UserController::class, 'updateUserRole'])->name('user.profile.update.action');
+
+    Route::get('/transaction', [TransactionController::class, 'viewCreateTransactionPage'])->name('create.transaction.page');
+
+    Route::post('/transaction', [TransactionController::class, 'create'])->name('create.transaction.action');
 });
 
 Route::get('/', [DashboardController::class, 'viewDashboardPage'])->name('dashboard.viewer.page');

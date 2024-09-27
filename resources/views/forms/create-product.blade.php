@@ -103,5 +103,4 @@
 
     <button type="submit" class="mt-8 border bg-black p-3 font-medium text-white">SUBMIT</button>
   </form>
-
 @endsection

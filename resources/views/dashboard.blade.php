@@ -32,10 +32,9 @@
             <a
               href="{{ route("view.product.detail.page", ["product_id" => $product->id]) }}"
               class="flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden"
-            > 
-              
+            >
               <img
-                src="{{ asset('/storage/' . $product->image) }}"
+                src="{{ asset("/storage/" . $product->image) }}"
                 alt="{{ $product->name }}"
                 class="h-full w-full border object-cover"
               />
@@ -55,11 +54,13 @@
                 @endif
                 <h1 class="line-clamp-2 text-2xl font-medium">{{ $product->name }}</h1>
               </div>
-              <h1 class="mt-10 text-xl">IDR {{ number_format($product->price, 0, ',', '.') }}</h1>
+              <h1 class="mt-10 text-xl">IDR {{ number_format($product->price, 0, ",", ".") }}</h1>
             </div>
           </div>
         @endforeach
       </section>
     @endif
   </main>
+
+  @include("components.footer")
 @endsection

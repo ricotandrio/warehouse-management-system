@@ -10,15 +10,13 @@
       <strong>September 26, 2024</strong>
     </p>
 
-    <p class="mt-5">
-      This page show all available product categories.      
-    </p>
+    <p class="mt-5">This page show all available product categories.</p>
 
     <ul class="list-disc">
       @foreach ($product_categories as $product_category)
         <li class="ml-5">
-          <a 
-            href="{{ route('product-category.product.page', ['category_id' => $product_category->id]) }}" 
+          <a
+            href="{{ route("product-category.product.page", ["category_id" => $product_category->id]) }}"
             class="hover:underline hover:decoration-black"
           >
             {{ $product_category->name }}
@@ -27,4 +25,5 @@
       @endforeach
     </ul>
   </main>
+  @include("components.footer")
 @endsection

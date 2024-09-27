@@ -93,6 +93,10 @@ class ProductController extends Controller
             'latest_stock_quantity' => ['required', 'integer'],
         ]);
 
+        if(!$request->confirmation) {
+            return redirect()->back()->with('error', 'Please confirm the action.');
+        }
+        
         $product = Product::find($request->product_id);
 
         if(!$product) {
