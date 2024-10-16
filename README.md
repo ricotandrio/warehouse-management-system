@@ -1,64 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Warehouse Management System
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+3. [System Requirements](#system-requirements)
+4. [Installation Guide](#installation-guide)
+5. [Usage](#usage)
+   - [Adding Products](#adding-products)
+   - [Managing Transactions](#managing-transactions)
+6. [Technologies Used](#technologies-used)
+7. [Entity-Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
+8. [Contributing](#contributing)
+9. [License and Usage Restrictions](#license-and-usage-restrictions)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The **Warehouse Management System** is a self-developed solution designed for managing warehouse inventory. It provides functionalities for tracking stock levels, handling inbound and outbound transactions, and managing products with ease. This system is built using Laravel and is suitable for small to medium-sized warehouses, offering a user-friendly interface for inventory control and product management.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The project is intended for personal use and is not meant for commercial distribution. Any use of the code in this system for commercial purposes is strictly prohibited.
 
-## Learning Laravel
+## Key Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Inventory Management**: Effortlessly add, modify, and delete items from the inventory database.
+- **Inbound and Outbound Transactions**: Track stock movements, including adding items to the warehouse (IN) and removing them (OUT).
+- **Dynamic Product Input**: Seamlessly add multiple products with their respective quantities using an intuitive interface.
+- **Transaction History**: Access a detailed log of all stock movements, including product names, quantities, and transaction types.
+- **Transaction Management**: Edit and delete existing transactions as needed.
+- **Validation**: Ensure that product selections and quantities are valid while preventing duplicate entries in a single transaction.
+- **Viewer Dashboard**: Notifications for items that are low in stock or out of stock.
+- **Admin Dashboard**: Comprehensive management features for overseeing the warehouse system.
+- **Filter and View Options**: Enable filtering of views based on product manufacturers or categories. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## System Requirements
 
-## Laravel Sponsors
+- **PHP Version**: ^8.0.2
+- **Laravel Framework**: ^9.2
+- **Other Packages**:
+  - `guzzlehttp/guzzle` ^7.2
+  - `laravel/sanctum` ^2.14.1
+  - `laravel/tinker` ^2.7
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Installation Guide
 
-### Premium Partners
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-repo/warehouse-management-system.git
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+2. **Navigate to the project directory**:
+   ```bash
+   cd warehouse-management-system
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   composer install
+   ```
+
+4. **Set up environment variables**:
+   Copy the example environment file and configure it as needed:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Generate application key**:
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Set up the database**:
+   Configure your database in the `.env` file and run the migrations:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+7. **Run the application**:
+   Start the development server:
+   ```bash
+   php artisan serve
+   ```
+
+8. **Access the system**:
+   Navigate to `http://127.0.0.1:8000` in your browser.
+
+## Usage
+
+### Adding Products
+You can add new products to the warehouse inventory. Products can have unique identifiers and quantities. Ensure that the input fields are correctly filled out to manage stock levels efficiently.
+
+### Managing Transactions
+Transactions are divided into two types:
+- **IN Transactions**: To add stock to the warehouse.
+- **OUT Transactions**: To remove stock from the warehouse.
+
+Each transaction is recorded in the system, allowing you to track inventory changes over time.
+
+## Technologies Used
+
+- **Backend**: Laravel 9.x (PHP Framework)
+- **Frontend**: Blade Templating Engine, HTML, CSS, JavaScript
+- **Database**: MySQL 
+- **UUID-Based Identification**: For uniquely identifying transaction headers and items. 
+
+## Entity-Relationship Diagram (ERD)
+The Entity-Relationship Diagram (ERD) for the Warehouse Management System is available in the `/docs` directory. This diagram visually represents the database schema, showcasing the relationships between different entities involved in the system, such as products, transactions, and users.
 
 ## Contributing
+Even though this project has been completed personally, contributions are still welcome! If you have suggestions for enhancements, bug fixes, or new features, your input is highly appreciated. To contribute, please follow these guidelines:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Fork the Repository**: Create your own copy of the project by forking the repository on GitHub.
+2. **Clone Your Fork**: Download your forked repository to your local machine.
+   ```bash
+   git clone https://github.com/your-username/warehouse-management-system.git
+   ```
+3. **Create a Branch**: Before making changes, create a new branch for your feature or fix.
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+4. **Make Your Changes**: Implement your changes, ensuring to follow the coding standards and best practices.
+5. **Commit Your Changes**: Commit your changes with a clear and concise message.
+   ```bash
+   git commit -m "Add a brief description of your changes"
+   ```
+6. **Push to Your Fork**: Push your changes to your forked repository.
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+7. **Open a Pull Request**: Go to the original repository and create a pull request, detailing the changes you made and their purpose.
 
-## Code of Conduct
+Thank you for considering contributing to the Warehouse Management System! Your contributions can help enhance the project and make it even more beneficial for users.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## License and Usage Restrictions
 
-## Security Vulnerabilities
+This **Warehouse Management System** is licensed for **personal use only**. You are free to use and modify the code for non-commercial purposes, but **commercial use is strictly prohibited**. This includes:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **You may** use the system for managing personal warehouse inventory.
+- **You may not** sell, redistribute, or use this system for any commercial ventures.
 
-## License
+**Warning**: Any attempt to sell or commercially distribute this code is strictly forbidden.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+**Disclaimer**: This system is provided as-is without warranties or support. Use it at your own risk for personal purposes only.
