@@ -2,39 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manufacturer;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ManufacturerController;
 
 class DashboardController extends Controller
 {
-    protected $productController;
-    protected $manufacturerController;
-
-    public function __construct(ProductController $productController, ManufacturerController $manufacturerController)
+    public function viewDashboardPage()
     {
-        $this->productController = $productController;
-        $this->manufacturerController = $manufacturerController;
+        return view('dashboard', [
+            'products' => Product::orderBy('name', 'asc')->get(),
+        ]);
     }
-    
-    public function index(Request $request)
+
+    public function viewAdminDashboardPage(Request $request)
     {
-        $page = $request->query('page', 1);
-        $limit = $request->query('limit', 10);
-        $order = $request->query('order', 'asc');
-        $createProduct = $request->query('createProduct', 'false');
-        
-        $products = $this->productController->getAllProducts($page, $limit, $order);
-        
+        $selected = $request->query('selected', 'products');
+        // if(!auth()->check()) {
+        //     return redirect()->route('login');
+        // }
+
+        // if(auth()->user()->role !== 'admin') {
+        //     return redirect()->route('dashboard');
+        // }
+
+        $products = [];
         $manufacturers = [];
-        if($createProduct == 'true') {
-            $manufacturers = $this->manufacturerController->getAllManufacturers();
+        $categories = [];
+
+        if($selected === 'products') {
+            $products = Product::orderBy('name', 'asc')->get();
+        } else if($selected === 'manufacturers') {
+            $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
+        } else if($selected === 'categories') {
+            $categories = ProductCategory::orderBy('name', 'asc')->get();
         }
 
-        return view('dashboard', [
+        return view('admins.dashboard', [
             'products' => $products,
-            'createProduct' => $createProduct,
-            'manufacturers' => $manufacturers
+            'manufacturers' => $manufacturers,
+            'categories' => $categories,
+            'selected' => $selected,
         ]);
     }
 }

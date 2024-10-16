@@ -1,11 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Product\ManufacturerController;
+use App\Http\Controllers\Product\ProductCategoryController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ManufacturerController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\ProductCategory;
+use App\Models\User;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,26 +27,56 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/login');
+Route::middleware(['admin'])->prefix('/admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'viewAdminDashboardPage'])->name('dashboard.admin.page');
 
-Route::get('/login', [UserController::class, 'getLoginView'])->name('login');
 
-Route::post('/register', [UserController::class, 'register'])->name('post.register');
-Route::post('/login', [UserController::class, 'login'])->name('post.login');
+    Route::get('/product/{product_id}/update-stock', [ProductController::class, 'viewUpdateStockPage'])->name('update-stock.page');
 
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::put('/product/{product_id}/update-stock', [ProductController::class, 'updateStock'])->name('update-stock.action');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::redirect('/', '/dashboard');
+    Route::get('/user/{user_id}', [AdminUserController::class, 'viewSpecificUserPage'])->name('user.profile.by.admin.page');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    Route::get('/search', [DashboardController::class, 'search'])->name('search');
+    Route::put('/user/{user_id}', [UserController::class, 'updateUserRole'])->name('user.profile.update.action');
 
-    Route::get('/manufacturer', [ManufacturerController::class, 'index'])->name('manufacturer');
+    Route::get('/transaction', [TransactionController::class, 'viewCreateTransactionPage'])->name('create.transaction.page');
 
-    Route::post('/create-product', [ProductController::class, 'createProduct'])->name('create.product');
-
-    Route::delete('/delete-product/{product_id}', [ProductController::class, 'deleteProduct'])->name('delete.product');
+    Route::post('/transaction', [TransactionController::class, 'create'])->name('create.transaction.action');
 });
 
+Route::get('/', [DashboardController::class, 'viewDashboardPage'])->name('dashboard.viewer.page');
+
+Route::get('/form/page/create-product', [ProductController::class, 'viewCreateProductPage'])->name('create.product.page');
+Route::post('/form/action/create-product', [ProductController::class, 'create'])->name('create.product.action');
+
+Route::get('/form/page/create-manufacturer', [ManufacturerController::class, 'viewCreateManufacturerPage'])->name('create.manufacturer.page');
+Route::post('/form/action/create-manufacturer', [ManufacturerController::class, 'create'])->name('create.manufacturer.action');
+
+Route::get('/form/page/create-product-category', [ProductCategoryController::class, 'viewCreateProductCategoryPage'])->name('create.product-category.page');
+Route::post('/form/action/create-product-category', [ProductCategoryController::class, 'create'])->name('create.product-category.action');
+
+Route::get('/product/{product_id}', [ProductController::class, 'viewProductDetailPage'])->name('view.product.detail.page');
+
+Route::get('/login', [LoginController::class, 'viewloginPage'])->name('login.page');
+Route::post('/login', [LoginController::class, 'login'])->name('login.action');
+
+Route::get('/register', [RegisterController::class, 'viewRegisterPage'])->name('register.page');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.action');
+
+Route::get('/privacy-policy', [StaticPageController::class, 'viewPrivacyPolicyPage'])->name('privacy-policy.page');
+Route::get('/terms-and-conditions', [StaticPageController::class, 'viewTermsAndConditionsPage'])->name('terms-and-conditions.page');
+Route::get('/contact-us', [StaticPageController::class, 'viewContactUsPage'])->name('contact-us.page');
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
+
+Route::delete('/product/{product_id}', [ProductController::class, 'delete'])->name('delete.product.action');
+
+Route::get('/profile', [UserController::class, 'viewUserProfilePage'])->name('user.profile.page');
+
+Route::get('/product-categories', [ProductCategoryController::class, 'viewProductCategoriesPage'])->name('product-categories.page');
+
+Route::get('/product-category/{category_id}', function (string $category_id) {})->name('product-category.product.page');
+
+Route::get('/manufacturers', [ManufacturerController::class, 'viewManufacturersPage'])->name('manufacturers.page');
+
+Route::get('/manufacturer/{manufacturer_id}', function (string $manufacturer_id) {})->name('manufacturer.product.page');
