@@ -31,7 +31,7 @@
         />
 
         <label for="role" class="mt-6">ROLE</label>
-        @if (auth()->user()->role === "ADMIN")
+        @if (auth()->user()->role === "ADMIN" && $user->id !== auth()->user()->id)
           <select name="role" id="role" class="mt-1 border border-black p-3 font-light" required>
             @foreach (["ADMIN", "VIEWER", "EDITOR"] as $role)
               <option value="{{ $role }}" {{ $user->role === $role ? "selected" : "" }}>
@@ -59,17 +59,19 @@
           <span>{{ $user->updated_at }}</span>
         </p>
 
-        <div class="mt-5 flex flex-row">
-          <input type="checkbox" name="confirmation" id="confirmation" value="true" required />
-          <label for="confirmation" class="ml-2">
-            I confirm that I,
-            <b><i>{{ auth()->user()->username }}</i></b>
-            , want to update this user.
-          </label>
-        </div>
-        <button type="submit" class="mt-5 w-full bg-black px-5 py-3 text-center text-white hover:opacity-60">
-          UPDATE
-        </button>
+        @if (auth()->user()->role === "ADMIN" && $user->id !== auth()->user()->id)  
+          <div class="mt-5 flex flex-row">
+            <input type="checkbox" name="confirmation" id="confirmation" value="true" required />
+            <label for="confirmation" class="ml-2">
+              I confirm that I,
+              <b><i>{{ auth()->user()->username }}</i></b>
+              , want to update this user.
+            </label>
+          </div>
+          <button type="submit" class="mt-5 w-full bg-black px-5 py-3 text-center text-white hover:opacity-60">
+            UPDATE
+          </button>
+        @endif
       </form>
     </section>
   </main>

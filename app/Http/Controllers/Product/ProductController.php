@@ -78,6 +78,12 @@ class ProductController extends Controller
 
     public function delete(string $product_id)
     {
+        $transaction_detail = TransactionDetail::where('product_id', $product_id)->first();
+
+        if ($transaction_detail) {
+            return redirect()->back()->with('error', 'Product is associated with transaction, cannot be deleted.');
+        }
+
         $product = Product::destroy($product_id);
 
         if (!$product) {

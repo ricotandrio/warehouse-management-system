@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
 
     public function viewProductCategoriesPage()
     {
-        $product_categories = ProductCategory::all();
+        $product_categories = ProductCategory::orderBy('name')->get();
 
         return view('product-categories', [
             'product_categories' => $product_categories

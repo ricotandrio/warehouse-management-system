@@ -23,4 +23,8 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User role updated successfully');
     }
+
+    public function viewUserProfilePage() {
+        return view('profile', ['user' => auth()->user()]);  
+    }
 }

@@ -15,7 +15,8 @@ class TransactionDetail extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'transaction_id',
         'product_id',
-        'quantity'
+        'quantity',
     ];
 }

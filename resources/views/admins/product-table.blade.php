@@ -102,11 +102,13 @@
               action="{{ route("delete.product.action", ["product_id" => $product->id]) }}"
               method="POST"
               class="inline"
+              id="delete_form"
             >
               @csrf
               @method("DELETE")
               <button
                 type="submit"
+                id="delete_button"
                 class="flex flex-row items-center justify-center bg-red-500 py-2 pl-4 pr-5 text-white hover:opacity-60"
               >
                 <svg
@@ -135,3 +137,11 @@
     @endforeach
   </tbody>
 </table>
+<script>
+  document.getElementById("delete_button").addEventListener("click", function() {
+    var result = confirm("Are you sure you want to delete this product?");
+    if (result) {
+      document.getElementById('delete_form').submit();
+    }
+  });
+</script>

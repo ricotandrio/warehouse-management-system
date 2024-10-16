@@ -39,4 +39,13 @@ class ManufacturerController extends Controller
     {
         return view('forms.create-manufacturer');
     }
+
+    public function viewManufacturersPage()
+    {
+        $manufacturers = Manufacturer::orderBy('name')->get();
+
+        return view('manufacturers', [
+            'manufacturers' => $manufacturers
+        ]);
+    }
 }

@@ -13,6 +13,7 @@ class TransactionHeader extends Model
 
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $autoincrement = false;
 
     protected $fillable = [
         'type'
