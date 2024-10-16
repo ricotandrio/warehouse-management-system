@@ -18,8 +18,6 @@
 
 The **Warehouse Management System** is a self-developed solution designed for managing warehouse inventory. It provides functionalities for tracking stock levels, handling inbound and outbound transactions, and managing products with ease. This system is built using Laravel and is suitable for small to medium-sized warehouses, offering a user-friendly interface for inventory control and product management.
 
-The project is intended for personal use and is not meant for commercial distribution. Any use of the code in this system for commercial purposes is strictly prohibited.
-
 ## Key Features
 
 - **Inventory Management**: Effortlessly add, modify, and delete items from the inventory database.
@@ -137,7 +135,5 @@ This **Warehouse Management System** is licensed for **personal use only**. You 
 
 - **You may** use the system for managing personal warehouse inventory.
 - **You may not** sell, redistribute, or use this system for any commercial ventures.
-
-**Warning**: Any attempt to sell or commercially distribute this code is strictly forbidden.
 
 **Disclaimer**: This system is provided as-is without warranties or support. Use it at your own risk for personal purposes only.
