@@ -140,6 +140,4 @@ This **Warehouse Management System** is licensed for **personal use only**. You 
 
 **Warning**: Any attempt to sell or commercially distribute this code is strictly forbidden.
 
----
-
 **Disclaimer**: This system is provided as-is without warranties or support. Use it at your own risk for personal purposes only.
