@@ -7,7 +7,7 @@
   <main class="w-full">
     <section class="grid grid-cols-1 px-10 sm:grid-cols-2">
       <div class="flex aspect-square items-start justify-center overflow-hidden">
-        <img src="{{ $user->profile_image }}" alt="{{ $user->username }}" class="mt-10 h-1/2 w-1/2 object-cover" />
+        <img src="{{ asset('/storage/' . $user->profile_image) }}" alt="{{ $user->username }}" class="mt-10 h-1/2 w-1/2 object-cover" />
       </div>
       <form
         action="{{ route("user.profile.update.action", ["user_id" => $user->id]) }}"

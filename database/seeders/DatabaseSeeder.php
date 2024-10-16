@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            // UserTableSeeder::class,
-            // ManufacturerTableSeeder::class,
-            // ProductCategoryTableSeeder::class,
-            ProductTableSeeder::class,
-        ]);
+        $uuidManager = new UuidManager();
+
+        $this->callWith(UserTableSeeder::class, ['uuidManager' => $uuidManager]);
+        $this->callWith(ManufacturerTableSeeder::class, ['uuidManager' => $uuidManager]);
+        $this->callWith(ProductCategoryTableSeeder::class, ['uuidManager' => $uuidManager]);
+        $this->callWith(ProductTableSeeder::class, ['uuidManager' => $uuidManager]);
     }
 }
