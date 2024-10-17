@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
 {
-    public function viewSpecificUserPage($user_id)
+    public function viewSpecificUserPage(User $user)
     {
-        $user = User::find($user_id);
-
         return view('profile', ['user' => $user]);
     }
 }

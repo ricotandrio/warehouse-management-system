@@ -14,7 +14,7 @@
         />
       </div>
       <form
-        action="{{ route("user.profile.update.action", ["user_id" => $user->id]) }}"
+        action="{{ route("user.profile.update.action", ["user" => $user]) }}"
         method="POST"
         class="flex flex-col p-10"
       >

@@ -55,9 +55,8 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product created successfully.');
     }
 
-    public function viewProductDetailPage(string $product_id) {
-        $product = Product::find($product_id);
-        
+    public function viewProductDetailPage(Product $product) {
+
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found.');
         }
@@ -76,15 +75,15 @@ class ProductController extends Controller
         ]);
     }
 
-    public function delete(string $product_id)
+    public function delete(Product $product)
     {
-        $transaction_detail = TransactionDetail::where('product_id', $product_id)->first();
+        $transaction_detail = TransactionDetail::where('product_id', $product->id)->first();
 
         if ($transaction_detail) {
             return redirect()->back()->with('error', 'Product is associated with transaction, cannot be deleted.');
         }
 
-        $product = Product::destroy($product_id);
+        $product = $product->delete();
 
         if (!$product) {
             return redirect()->back()->with('error', 'Failed to delete product.');
@@ -93,7 +92,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product deleted successfully.');
     }
 
-    public function updateStock(Request $request)
+    public function updateStock(Request $request, Product $product)
     {
         $validated_data = $request->validate([
             'latest_stock_quantity' => ['required', 'integer'],
@@ -102,8 +101,6 @@ class ProductController extends Controller
         if(!$request->confirmation) {
             return redirect()->back()->with('error', 'Please confirm the action.');
         }
-        
-        $product = Product::find($request->product_id);
 
         if(!$product) {
             return redirect()->back()->with('error', 'Product not found.');
@@ -123,7 +120,7 @@ class ProductController extends Controller
         
         $transaction_detail = TransactionDetail::create([
             'transaction_id' => $transaction_header->fresh()->id,
-            'product_id' => $request->product_id,
+            'product_id' => $product->id,
             'quantity' => $validated_data["latest_stock_quantity"]
         ]);
         
@@ -138,8 +135,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product stock successfully updated');
     }
 
-    public function viewUpdateStockPage(string $product_id) {
-        $product = Product::find($product_id);
+    public function viewUpdateStockPage(Product $product) {
 
         if(!$product) {
             return redirect()->intended('/')->with('error', 'Product is not available.');

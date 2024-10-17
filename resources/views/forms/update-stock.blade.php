@@ -4,7 +4,7 @@
 @section("content")
   @include("components.navigation-bar")
   <form
-    action="{{ route("update-stock.action", ["product_id" => $product->id]) }}"
+    action="{{ route("update-stock.action", ["product" => $product]) }}"
     method="POST"
     class="flex flex-col px-10 py-3 pt-5 sm:pt-8"
   >

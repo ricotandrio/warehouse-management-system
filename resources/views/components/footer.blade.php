@@ -20,15 +20,15 @@
     <div class="mt-8 flex justify-center space-x-6">
       <a href="#" class="text-gray-400 hover:text-white">
         <span class="sr-only">Facebook</span>
-        <img class="h-6 w-6" src="{{ asset('/storage/socials/facebook.svg') }}" alt="facebook_icon">
+        <img class="h-6 w-6" src="{{ asset("/storage/socials/facebook.svg") }}" alt="facebook_icon" />
       </a>
       <a href="#" class="text-gray-400 hover:text-white">
         <span class="sr-only">Instagram</span>
-        <img class="w-6 h-6" src="{{ asset('/storage/socials/instagram.svg') }}" alt="instagram_icon">
+        <img class="h-6 w-6" src="{{ asset("/storage/socials/instagram.svg") }}" alt="instagram_icon" />
       </a>
       <a href="#" class="text-gray-400 hover:text-white">
         <span class="sr-only">Twitter</span>
-        <img class="w-6 h-6" src="{{ asset('/storage/socials/twitter.svg') }}" alt="twitter_icon">
+        <img class="h-6 w-6" src="{{ asset("/storage/socials/twitter.svg") }}" alt="twitter_icon" />
       </a>
     </div>
     <p class="mt-8 text-center text-base leading-6 text-gray-400">© 2024 Warehouse, Inc. All rights reserved.</p>

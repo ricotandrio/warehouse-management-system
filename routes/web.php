@@ -30,14 +30,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['admin'])->prefix('/admin')->group(function () {
     Route::get('/', [DashboardController::class, 'viewAdminDashboardPage'])->name('dashboard.admin.page');
 
+    Route::get('/product/{product}/update-stock', [ProductController::class, 'viewUpdateStockPage'])->name('update-stock.page');
 
-    Route::get('/product/{product_id}/update-stock', [ProductController::class, 'viewUpdateStockPage'])->name('update-stock.page');
+    Route::put('/product/{product}/update-stock', [ProductController::class, 'updateStock'])->name('update-stock.action');
 
-    Route::put('/product/{product_id}/update-stock', [ProductController::class, 'updateStock'])->name('update-stock.action');
+    Route::get('/user/{user}', [AdminUserController::class, 'viewSpecificUserPage'])->name('user.profile.by.admin.page');
 
-    Route::get('/user/{user_id}', [AdminUserController::class, 'viewSpecificUserPage'])->name('user.profile.by.admin.page');
-
-    Route::put('/user/{user_id}', [UserController::class, 'updateUserRole'])->name('user.profile.update.action');
+    Route::put('/user/{user}', [UserController::class, 'updateUserRole'])->name('user.profile.update.action');
 
     Route::get('/transaction', [TransactionController::class, 'viewCreateTransactionPage'])->name('create.transaction.page');
 
@@ -55,7 +54,7 @@ Route::post('/form/action/create-manufacturer', [ManufacturerController::class, 
 Route::get('/form/page/create-product-category', [ProductCategoryController::class, 'viewCreateProductCategoryPage'])->name('create.product-category.page');
 Route::post('/form/action/create-product-category', [ProductCategoryController::class, 'create'])->name('create.product-category.action');
 
-Route::get('/product/{product_id}', [ProductController::class, 'viewProductDetailPage'])->name('view.product.detail.page');
+Route::get('/product/{product}', [ProductController::class, 'viewProductDetailPage'])->name('product.detail.page');
 
 Route::get('/login', [LoginController::class, 'viewloginPage'])->name('login.page');
 Route::post('/login', [LoginController::class, 'login'])->name('login.action');
@@ -69,14 +68,18 @@ Route::get('/contact-us', [StaticPageController::class, 'viewContactUsPage'])->n
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
 
-Route::delete('/product/{product_id}', [ProductController::class, 'delete'])->name('delete.product.action');
+Route::delete('/product/{product}', [ProductController::class, 'delete'])->name('delete.product.action');
 
 Route::get('/profile', [UserController::class, 'viewUserProfilePage'])->name('user.profile.page');
 
 Route::get('/product-categories', [ProductCategoryController::class, 'viewProductCategoriesPage'])->name('product-categories.page');
 
-Route::get('/product-category/{category_id}', function (string $category_id) {})->name('product-category.product.page');
+Route::get('/product-category/{product_category}', [ProductCategoryController::class, 'viewProductCategoryProductPage'])->name('product-category.product.page');
+
+Route::delete('product-category/{product_category}', [ProductCategoryController::class, 'delete'])->name('delete.product-category.action');
 
 Route::get('/manufacturers', [ManufacturerController::class, 'viewManufacturersPage'])->name('manufacturers.page');
 
-Route::get('/manufacturer/{manufacturer_id}', function (string $manufacturer_id) {})->name('manufacturer.product.page');
+Route::delete('/manufacturer/{manufacturer}', [ManufacturerController::class, 'delete'])->name('delete.manufacturer.action');
+
+Route::get('/manufacturer/{manufacturer}', [ManufacturerController::class, 'viewManufacturerProductPage'])->name('manufacturer.product.page');

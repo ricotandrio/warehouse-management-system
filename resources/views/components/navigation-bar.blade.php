@@ -36,7 +36,7 @@
         />
       </li>
       <li class="group mt-3 flex flex-row items-start justify-start">
-        <a href="">Product Manufacturers</a>
+        <a href="{{ route("manufacturers.page") }}">Product Manufacturers</a>
         <img
           src="{{ asset("/storage/icon/toleft.svg") }}"
           alt="toleft_icon"
@@ -52,12 +52,6 @@
         </li>
       @endif
 
-      <li class="mt-1">
-        <a href="#" class="underline hover:opacity-60">About</a>
-      </li>
-      <li class="mt-1">
-        <a href="#" class="underline hover:opacity-60">Team</a>
-      </li>
       <li class="mt-1">
         <a href="{{ route("contact-us.page") }}" class="underline hover:opacity-60">Contact Us</a>
       </li>

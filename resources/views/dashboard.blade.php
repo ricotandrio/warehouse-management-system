@@ -30,7 +30,7 @@
         @foreach ($products as $product)
           <div class="relative mb-10 flex flex-col">
             <a
-              href="{{ route("view.product.detail.page", ["product_id" => $product->id]) }}"
+              href="{{ route("product.detail.page", ["product" => $product]) }}"
               class="flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden"
             >
               <img
