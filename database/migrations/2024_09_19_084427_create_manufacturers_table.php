@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email', 50)->nullable();
             $table->string('phone', 20)->nullable();
             $table->text('description')->nullable();
-            $table->string('profile_image')->nullable();
+            $table->string('profile_image');
             $table->string('website_link')->nullable();
 
             $table->timestampTz('created_at');

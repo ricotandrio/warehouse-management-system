@@ -138,8 +138,8 @@
   </tbody>
 </table>
 <script>
-  document.getElementById("delete_button").addEventListener("click", function() {
-    var result = confirm("Are you sure you want to delete this product?");
+  document.getElementById('delete_button').addEventListener('click', function () {
+    var result = confirm('Are you sure you want to delete this product?');
     if (result) {
       document.getElementById('delete_form').submit();
     }

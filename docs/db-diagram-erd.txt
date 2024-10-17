@@ -10,159 +10,127 @@ Enum user_roles {
 }
 
 Table users {
-  uuid char(36) [pk]
+  id char(36) [pk, not null]
   username varchar(50) [unique, not null]
-  password varchar(255)
-  profile_image varchar(255)
-  roles user_roles
+  password varchar(255) [not null]
+  profile_image varchar(255) [default: '/default/profile.png', not null]
+  role user_roles [default: 'VIEWER', not null]
 
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
+  created_at timestamp [default: `now()`, not null]
+  created_by char(36) [not null]
+  updated_at timestamp
   updated_by char(36)
-  deleted_at datetime 
-  deleted_by char(36)
-
-  indexes {
-    username [name: 'username_index']
-  }
-}
-
-Table user_categories {
-  uuid char(36) [pk]
-  id varchar(50) [note: 'user category custom ID']
-  name varchar(100)
-  description varchar(100)
-
-  user_id char(36)
-
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
-  updated_by char(36)
-  deleted_at datetime 
+  deleted_at timestamp 
   deleted_by char(36)
 }
 
 Table products {
-  uuid char(36) [pk]
-  id varchar(50) [note: 'product real id']
-  name varchar(100)
-  description varchar(100)
+  id char(36) [pk, not null]
+  name varchar(100) [unique, not null]
+  sku varchar(255) [unique, not null]
+  description text
+  image varchar(255) [default: '/default/product.png', not null]
+  price decimal(10, 2) [not null]
+  stock_quantity integer [not null]
 
-  manufacturer_id char(36)
-  category_id char(36)
+  manufacturer_id char(36) [not null]
+  category_id char(36) [not null]
 
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
   updated_by char(36)
-  deleted_at datetime 
-  deleted_by char(36)
-
-  indexes {
-    name [name: 'product_name_index']
-  }
-}
-
-Table product_images {
-  uuid char(36) [pk]
-  product_id char(36)
-  image_link varchar(255)
-
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
-  updated_by char(36)
-  deleted_at datetime 
-  deleted_by char(36)
-}
-
-Table product_details {
-  uuid char(36) [pk]
-  variant_id varchar(50)
-  variant_size varchar(20)
-  variant_description varchar(100)
-  stock_quantity int
-
-  product_id char(36)
-
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
-  updated_by char(36)
-  deleted_at datetime 
+  deleted_at timestamp 
   deleted_by char(36)
 }
 
 Table product_categories {
-  uuid char(36) [pk]
-  id varchar(50) [note: 'product category custom ID']
-  name varchar(100)
-  description varchar(100)
+  id char(36) [pk, not null]
+  name varchar(100) [not null]
+  description text
 
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
   updated_by char(36)
-  deleted_at datetime 
+  deleted_at timestamp 
   deleted_by char(36)
 }
 
 Table manufacturers {
-  uuid char(36) [pk]
-  id varchar(50) [note: 'manufacturer custom ID']
-  name varchar(100)
+  id char(36) [pk, not null]
+  name varchar(100) [not null]
   email varchar(20)
   phone varchar(20)
-  description varchar(100)
+  description text
+  profile_image varchar(255) [default: '/default/profile.png', not null]
   website_link varchar(255)
-  image_link varchar(255)
 
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
   updated_by char(36)
-  deleted_at datetime 
+  deleted_at timestamp 
   deleted_by char(36)
-
-  indexes {
-    name [name: 'manufacturer_name_index']
-  }
 }
 
 Table sales {
-  uuid char(36) [pk]
-  id varchar(50) [note: 'manufacturer custom ID']
-  name varchar(100)
+  id char(36) [pk, not null]
+  name varchar(100) [not null]
   phone varchar(20)
-  description varchar(100)
+  description text  
 
   manufacturer_id char(36)
 
-  created_at datetime [default: `now()`]
-  created_by char(36)
-  updated_at datetime [default: `now()`]
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
   updated_by char(36)
-  deleted_at datetime 
+  deleted_at timestamp 
   deleted_by char(36)
-  
-  indexes {
-    name [name: 'sales_name_index']
-  }
 }
 
+Enum transaction_types {
+  IN
+  OUT
+}
 
-Ref: sales.manufacturer_id < manufacturers.uuid
-Ref: products.manufacturer_id < manufacturers.uuid
-Ref: product_images.product_id < products.uuid
-Ref: product_details.product_id < products.uuid
-Ref: products.category_id < product_categories.uuid 
-Ref: user_categories.user_id < users.uuid
+Table transaction_headers {
+  id char(36) [pk, not null]
+  type transaction_types [not null]
+  description text
+
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
+  updated_by char(36)
+  deleted_at timestamp 
+  deleted_by char(36)
+}
+
+Table transaction_details {
+  id char(36) [pk, not null]
+  quantity integer [not null]
+
+  product_id char(36) [not null]
+  transaction_id char(36) [not null]
+
+  created_at timestamp [default: `now()`]
+  created_by char(36) [not null]
+  updated_at timestamp
+  updated_by char(36)
+  deleted_at timestamp 
+  deleted_by char(36)
+}
+
+Ref: products.category_id > product_categories.id
+Ref: products.manufacturer_id > manufacturers.id
+Ref: sales.manufacturer_id > manufacturers.id
+Ref: transaction_details.product_id > products.id
+Ref: transaction_details.transaction_id > transaction_headers.id
 
 Enum database_operations {
   CREATE
-  READ
   UPDATE
   DELETE
 }
@@ -170,12 +138,12 @@ Enum database_operations {
 Table logs {
   id int [pk, increment]
 
-  entity_type varchar(30)
+  entity_name varchar(50) [not null]
   entity_uuid char(36)
 
-  action_is database_operations 
-  action_by char(36)
-  action_at timestamp
+  action_is database_operations [not null]
+  action_by char(36) [not null]
+  action_at timestamp [not null]
 
   value_before varchar(255)
   value_after varchar(255)

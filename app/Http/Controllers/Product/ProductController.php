@@ -122,6 +122,7 @@ class ProductController extends Controller
         }
         
         $transaction_detail = TransactionDetail::create([
+            'transaction_id' => $transaction_header->fresh()->id,
             'product_id' => $request->product_id,
             'quantity' => $validated_data["latest_stock_quantity"]
         ]);
