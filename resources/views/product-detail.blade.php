@@ -32,7 +32,7 @@
 
         <div class="w-full">
           <a
-            href="{{ route("update-stock.page", ["product_id" => $product->id]) }}"
+            href="{{ route("update-stock.page", ["product" => $product]) }}"
             class="mt-10 block w-full bg-black px-10 py-5 text-center text-white hover:opacity-60"
           >
             UPDATE STOCK

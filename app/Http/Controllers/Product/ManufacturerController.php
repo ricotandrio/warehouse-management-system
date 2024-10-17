@@ -43,9 +43,60 @@ class ManufacturerController extends Controller
     public function viewManufacturersPage()
     {
         $manufacturers = Manufacturer::orderBy('name')->get();
+        $last_updated = Manufacturer::orderBy('updated_at', 'desc')->first();
+        $last_created = Manufacturer::orderBy('created_at', 'desc')->first();
+
+        $last_time = $last_updated->updated_at > $last_created->created_at ? $last_updated->updated_at : $last_created->created_at;
 
         return view('manufacturers', [
-            'manufacturers' => $manufacturers
+            'manufacturers' => $manufacturers,
+            'last_time' => $last_time
         ]);
+    }
+
+    public function viewManufacturerProductPage(Manufacturer $manufacturer) {
+        $products = $manufacturer->products()->orderBy('name')->get();
+
+        if($products->isEmpty()) {
+            return redirect()->back()->with('error', 'No products found for this manufacturer.');
+        }
+
+        $last_updated = $manufacturer->products()->orderBy('updated_at', 'desc')->first();
+        $last_created = $manufacturer->products()->orderBy('created_at', 'desc')->first();
+
+        if($last_updated && $last_created) {
+            $last_time = $last_updated->updated_at > $last_created->created_at ? $last_updated->updated_at : $last_created->created_at;
+        }
+        
+        if(!$last_updated && !$last_created) {
+            $last_time = null;
+        }
+
+        if(!$last_updated) {
+            $last_time = $last_created->created_at;
+        }
+
+        return view('manufacturer', [
+            'manufacturer' => $manufacturer,
+            'products' => $products,
+            'last_time' => $last_time
+        ]);
+    }
+
+    public function delete(Manufacturer $manufacturer)
+    {
+        $products = $manufacturer->products()->get();
+
+        if(!$products->isEmpty()) {
+            return redirect()->back()->with('error', 'Manufacturer has products associated with it, cannot be deleted.');
+        }
+
+        $manufacturer = $manufacturer->delete();
+
+        if(!$manufacturer) {
+            return redirect()->back()->with('error', 'Failed to delete manufacturer.');
+        }
+
+        return redirect()->back()->with('success', 'Manufacturer deleted successfully.');
     }
 }

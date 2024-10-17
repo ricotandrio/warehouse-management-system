@@ -533,8 +533,20 @@ video {
 .top-0 {
   top: 0px;
 }
+.top-10 {
+  top: 2.5rem;
+}
+.-top-10 {
+  top: -2.5rem;
+}
+.-top-14 {
+  top: -3.5rem;
+}
 .-z-10 {
   z-index: -10;
+}
+.z-\[999\] {
+  z-index: 999;
 }
 .-mx-5 {
   margin-left: -1.25rem;
@@ -692,6 +704,15 @@ video {
 .h-10 {
   height: 2.5rem;
 }
+.h-32 {
+  height: 8rem;
+}
+.h-36 {
+  height: 9rem;
+}
+.h-56 {
+  height: 14rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -730,6 +751,12 @@ video {
 }
 .w-\[30vw\] {
   width: 30vw;
+}
+.w-24 {
+  width: 6rem;
+}
+.w-36 {
+  width: 9rem;
 }
 .min-w-full {
   min-width: 100%;
@@ -800,6 +827,9 @@ video {
 .gap-4 {
   gap: 1rem;
 }
+.gap-10 {
+  gap: 2.5rem;
+}
 .gap-x-2 {
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem;
@@ -852,6 +882,9 @@ video {
 .rounded-lg {
   border-radius: 0.5rem;
 }
+.rounded-full {
+  border-radius: 9999px;
+}
 .border {
   border-width: 1px;
 }
@@ -867,6 +900,14 @@ video {
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+.border-red-50 {
+  --tw-border-opacity: 1;
+  border-color: rgb(254 242 242 / var(--tw-border-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -907,6 +948,10 @@ video {
   -o-object-fit: cover;
      object-fit: cover;
 }
+.object-fill {
+  -o-object-fit: fill;
+     object-fit: fill;
+}
 .p-10 {
   padding: 2.5rem;
 }
@@ -915,6 +960,9 @@ video {
 }
 .p-5 {
   padding: 1.25rem;
+}
+.p-2 {
+  padding: 0.5rem;
 }
 .px-10 {
   padding-left: 2.5rem;
@@ -1035,6 +1083,10 @@ video {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
 .font-light {
   font-weight: 300;
 }
@@ -1046,6 +1098,9 @@ video {
 }
 .font-semibold {
   font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
 }
 .leading-6 {
   line-height: 1.5rem;
@@ -1278,6 +1333,10 @@ video {
     margin-left: -1.5rem;
   }
 
+  .sm\:mt-3 {
+    margin-top: 0.75rem;
+  }
+
   .sm\:w-\[30\%\] {
     width: 30%;
   }
@@ -1300,6 +1359,10 @@ video {
 
   .sm\:items-end {
     align-items: flex-end;
+  }
+
+  .sm\:items-center {
+    align-items: center;
   }
 
   .sm\:justify-between {

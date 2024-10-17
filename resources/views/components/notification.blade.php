@@ -2,7 +2,7 @@
   @if ($errors->any())
     <div
       id="error-popup"
-      class="alert alert-danger absolute right-10 top-0 mt-5 rounded-lg bg-red-100 p-5 text-red-500"
+      class="alert alert-danger absolute right-10 top-0 z-[999] mt-5 rounded-lg bg-red-100 p-5 text-red-500"
     >
       <img src="{{ asset("/storage/icon/warning.svg") }}" alt="warning_icon" class="h-6 w-6" />
       <ul class="mt-2">
@@ -16,7 +16,7 @@
   @if (session("error"))
     <div
       id="session-error-popup"
-      class="alert alert-danger absolute right-10 top-0 mt-5 rounded-lg bg-red-100 p-5 text-red-500"
+      class="alert alert-danger absolute right-10 top-0 z-[999] mt-5 rounded-lg bg-red-100 p-5 text-red-500"
     >
       <img src="{{ asset("/storage/icon/warning.svg") }}" alt="warning_icon" class="h-6 w-6" />
       <h1 class="mt-2">
@@ -28,7 +28,7 @@
   @if (session("success"))
     <div
       id="session-success-popup"
-      class="alert alert-danger absolute right-10 top-0 mt-5 rounded-lg bg-green-100 p-5 text-green-500"
+      class="alert alert-danger absolute right-10 top-0 z-[999] mt-5 rounded-lg bg-green-100 p-5 text-green-500"
     >
       <img src="{{ asset("/storage/icon/success.svg") }}" alt="success_icon" class="h-6 w-6" />
       <h1 class="mt-2">
