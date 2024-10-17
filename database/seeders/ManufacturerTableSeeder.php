@@ -17,18 +17,21 @@ class ManufacturerTableSeeder extends Seeder
             [
                 'id' => $uuidManager->generate('samsung'),
                 'name' => 'Samsung',
+                'profile_image' => '/default/profile.png',
                 'created_at' => now(),
                 'created_by' => $uuidManager->get('admin'),
             ],
             [
                 'id' => $uuidManager->generate('apple'),
                 'name' => 'Apple',
+                'profile_image' => '/default/profile.png',
                 'created_at' => now(),
                 'created_by' => $uuidManager->get('admin'),
             ],
             [
                 'id' => $uuidManager->generate('xiaomi'),
                 'name' => 'Xiaomi',
+                'profile_image' => '/default/profile.png',
                 'created_at' => now(),
                 'created_by' => $uuidManager->get('admin'),
             ],

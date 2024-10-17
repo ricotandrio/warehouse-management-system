@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('entity_name');
+            $table->string('entity_name', 50);
             $table->uuid('entity_uuid');
+
             $table->enum('action_is', ['CREATE', 'UPDATE', 'DELETE']);
             $table->uuid('action_by');
             $table->timestampTz('action_at');
+            
             $table->string('values_before')->nullable();
             $table->string('values_after')->nullable();
         });

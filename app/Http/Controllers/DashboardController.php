@@ -12,20 +12,13 @@ class DashboardController extends Controller
     public function viewDashboardPage()
     {
         return view('dashboard', [
-            'products' => Product::orderBy('name', 'asc')->get(),
+            'products' => Product::orderBy('stock_quantity', 'asc')->get(),
         ]);
     }
 
     public function viewAdminDashboardPage(Request $request)
     {
         $selected = $request->query('selected', 'products');
-        // if(!auth()->check()) {
-        //     return redirect()->route('login');
-        // }
-
-        // if(auth()->user()->role !== 'admin') {
-        //     return redirect()->route('dashboard');
-        // }
 
         $products = [];
         $manufacturers = [];

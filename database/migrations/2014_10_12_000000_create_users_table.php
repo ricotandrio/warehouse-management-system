@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('username', 50)->unique();
             $table->string('password');
-            $table->string('profile_image')->nullable();
+            $table->string('profile_image');
             $table->enum('role', ['ADMIN', 'EDITOR', 'VIEWER'])->default('VIEWER');
 
             $table->timestampTz('created_at');
