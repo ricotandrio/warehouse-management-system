@@ -23,7 +23,6 @@
           id="utility-menu-open"
           class="h-6 w-6 cursor-pointer hover:opacity-60"
         />
-        
       </div>
     </section>
 
